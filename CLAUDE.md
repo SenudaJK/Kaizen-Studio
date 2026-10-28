@@ -54,6 +54,46 @@ Postgres schema replacing the hardcoded `state` object below.
 Not in MVP (later phases): billing/subscriptions, team/shared accounts, mobile app, notifications,
 data export, AI-assisted root-cause suggestions.
 
+## Roadmap / Phases
+
+Build and ship in this order. Check a phase off only once its acceptance criteria are actually
+verified (build passes, flows tested), not just coded.
+
+- [x] **Phase 1 — Foundation.** Next.js (App Router, TypeScript, Tailwind) scaffolded in `app/`,
+  local Postgres via `docker-compose.yml`, Prisma schema modeling all four workspaces (see Domain
+  model below), initial migration applied, git repo initialized.
+- [x] **Phase 2 — Auth.** Auth.js (NextAuth v5) with Prisma adapter: email/password (bcrypt) +
+  Google OAuth, all routes gated behind login via `proxy.ts`, every table scoped to `userId`.
+- [x] **Phase 2.5 — Design system.** Prototype's palette/fonts/icons wired into Tailwind v4
+  (`globals.css`), shared auth UI primitives (`auth-card.tsx`), conventions documented above.
+- [ ] **Phase 3 — Workspace 1: Daily Check Sheet & Flow.** Morning/evening flow-chart routines,
+  weekly habit check sheet (real dates, not a fixed array), friction/blocker tally counter —
+  all reading/writing Postgres via Prisma, scoped to the signed-in user. This becomes the app's
+  main authenticated shell/nav (the four-workspace layout from the prototype).
+- [ ] **Phase 4 — Workspace 2: Root-Cause Studio.** Pareto 80/20 chart computed live from
+  `FrictionTally` rows, interactive Fishbone diagram (per-problem causes across the 4 fixed
+  categories, primary-cause selection, Poka-Yoke countermeasure).
+- [ ] **Phase 5 — Workspace 3: Stability & Correlations.** SPC/control charts with UCL/LCL/mean
+  computed from `SpcDataPoint` history (not hardcoded), spec-limit slider, scatter diagrams
+  pairing two metrics with correlation coefficient.
+- [ ] **Phase 6 — Workspace 4: Life Design & Pre-Mortem.** PDPC pre-mortem tree (pillars → risks
+  → countermeasures), Arrow diagram critical-path network with slack vs. critical-path nodes.
+- [ ] **Phase 7 — Account & settings.** Profile/password change, delete-account flow, basic
+  empty states and onboarding for a brand-new user (seed nothing — the prototype's demo data was
+  for the mockup only; real users start from zero).
+- [ ] **Phase 8 — Billing.** Stripe subscription (e.g. a single paid plan or free-trial + paid),
+  webhook handling, gating workspaces behind an active subscription, customer portal for
+  cancel/upgrade.
+- [ ] **Phase 9 — Production readiness.** Managed Postgres (Supabase/Neon), environment configs
+  for staging/prod, error monitoring (e.g. Sentry), basic analytics, responsive/mobile pass on
+  all four workspaces (the prototype already has a mobile bottom-nav pattern to port), accessible
+  color contrast and keyboard nav check.
+- [ ] **Phase 10 — Launch.** Marketing/landing page (separate from the authenticated app), deploy
+  to Vercel on a real domain, final QA pass across the full signup → use → subscribe flow.
+
+Not planned unless requested later: team/shared accounts, native mobile app, AI-assisted
+root-cause suggestions, data export/import, notifications.
+
 ## Domain model (from the prototype's `state` object)
 
 Use this as the basis for the Postgres schema — every top-level key becomes a user-scoped table:
