@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f9f8f5;
+  --foreground: #1c1b19;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Kaizen Studio editorial palette — see kaizen_personal_life_solution_studio.html */
+  --color-paper: #f9f8f5;
+  --color-ivory: #ffffff;
+  --color-stone: #f2efe9;
+  --color-stoneDark: #e6e2d8;
+  --color-espresso: #1c1b19;
+  --color-slateWarm: #6e6a63;
+  --color-terracotta: #c85a32;
+  --color-terracottaLight: #f9ece6;
+  --color-sage: #2d5a4c;
+  --color-sageLight: #e9f2ef;
+  --color-ochre: #d99b26;
+  --color-ochreLight: #fdf6e7;
+
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  --shadow-editorial: 0 2px 10px -2px rgba(28, 27, 25, 0.04), 0 1px 3px -1px rgba(28, 27, 25, 0.03);
+  --shadow-floating: 0 16px 36px -6px rgba(28, 27, 25, 0.08), 0 4px 12px -2px rgba(28, 27, 25, 0.04);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+  background-image: radial-gradient(#e6e2d8 0.65px, transparent 0.65px);
+  background-size: 24px 24px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-stone);
+}
+::-webkit-scrollbar-thumb {
+  background: #d0c9bc;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slateWarm);
+}
+
+.editorial-border {
+  border: 1px solid var(--color-stoneDark);
+}
+
+input[type="range"] {
+  accent-color: var(--color-terracotta);
 }

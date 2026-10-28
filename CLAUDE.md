@@ -79,7 +79,52 @@ out.
   supplied user/owner id.
 - SPC control limits (UCL/LCL) and Pareto cumulative percentages are *derived values* — compute
   them from raw logged data, don't store them as mutable fields that can drift out of sync.
-- Keep the existing visual language when porting UI: editorial/paper aesthetic, Instrument Serif
-  for headings, Plus Jakarta Sans for body, JetBrains Mono for data/labels, Phosphor Icons,
-  terracotta/sage/ochre accent palette on a warm paper background.
 - Prefer colocating Prisma schema changes with a migration in the same change.
+
+## UI/UX: follow the prototype's design system exactly
+
+`kaizen_personal_life_solution_studio.html` is the canonical visual reference. Every new page or
+component in `app/` must match it — don't invent new colors, type scales, spacing, or component
+shapes. If a pattern isn't covered below, open the HTML file and copy the closest existing pattern
+rather than improvising.
+
+- **Design tokens** live in `app/src/app/globals.css` under `@theme inline` (colors: `paper`,
+  `ivory`, `stone`, `stoneDark`, `espresso`, `slateWarm`, `terracotta` (+`terracottaLight`),
+  `sage` (+`sageLight`), `ochre` (+`ochreLight`); shadows: `shadow-editorial`, `shadow-floating`).
+  Use these Tailwind utility classes (`bg-terracotta`, `text-slateWarm`, `shadow-floating`, etc.),
+  never raw hex values in components.
+- **Fonts**: `font-serif` (Instrument Serif) for headings/titles only, `font-sans` (Plus Jakarta
+  Sans, the default body font) for everything else, `font-mono` (JetBrains Mono) for labels,
+  badges, KPI numbers, eyebrows, and anything data/stat-like. Loaded via `next/font/google` in
+  `app/src/app/layout.tsx` — don't add a `<link>` tag for fonts.
+- **Icons**: `@phosphor-icons/react`, imported from the `dist/csr/<IconName>` subpath per icon
+  (e.g. `import { CheckSquareOffsetIcon } from "@phosphor-icons/react/dist/csr/CheckSquareOffset"`)
+  to avoid bundling the whole icon set. Exports are named `<IconName>Icon`.
+- **Core component shapes**, matched to the prototype's HTML/Tailwind classes:
+  - Cards: `bg-ivory rounded-2xl editorial-border shadow-editorial p-6` (use `shadow-floating`
+    instead of `shadow-editorial` for modals/popovers).
+  - Eyebrow label above a heading: `font-mono text-[11px] uppercase tracking-widest text-terracotta`
+    (or `text-sage` / `text-slateWarm` depending on context).
+  - Section heading: `font-serif text-2xl text-espresso` (page-level titles go up to
+    `text-4xl lg:text-5xl`).
+  - Body copy: `text-slateWarm text-sm`.
+  - Primary button: `bg-terracotta text-ivory hover:bg-terracotta/90 rounded-xl text-sm font-medium
+    px-4 py-2.5 shadow-sm transition` (use `bg-espresso`/`bg-sage` instead of `bg-terracotta` for
+    non-destructive secondary actions, matching the prototype's per-tool accent color).
+  - Secondary/outline button: `bg-ivory hover:bg-stone border border-stoneDark text-espresso
+    rounded-xl text-sm font-medium px-4 py-2.5 transition`.
+  - Inputs: `bg-stone/70 border border-stoneDark rounded-xl px-3.5 py-2.5 text-sm text-espresso
+    placeholder:text-slateWarm focus:outline-none focus:border-terracotta transition`.
+  - Pills/tabs (segmented control): `inline-flex bg-stone p-1 rounded-xl border border-stoneDark`
+    wrapping buttons that get `bg-ivory text-espresso shadow-sm` when active, `text-slateWarm
+    hover:text-espresso` when inactive.
+  - Status colors: sage = success/done/positive correlation, terracotta = defect/slip/friction,
+    ochre = spec limit/warning/attention.
+- **Page chrome**: body keeps the warm paper background with the subtle dot grid (already set
+  globally in `globals.css` — don't override it per-page). Auth pages, modals, and the future
+  app shell should sit as an `ivory` card floating on that paper background, not as a plain white
+  page.
+- Shared auth-page primitives already exist in `app/src/components/auth-card.tsx`
+  (`AuthCard`, `AuthInput`, `AuthPrimaryButton`, `AuthSecondaryButton`, `AuthDivider`) — reuse or
+  extend this pattern (e.g. a `Card`, `Button` set) as the app grows, instead of re-deriving
+  Tailwind classes inline on every page.
