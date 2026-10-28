@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: kaizen
+      POSTGRES_PASSWORD: kaizen
+      POSTGRES_DB: kaizen_studio
+    ports:
+      - "5432:5432"
+    volumes:
+      - kaizen_pgdata:/var/lib/postgresql/data
+
+volumes:
+  kaizen_pgdata:

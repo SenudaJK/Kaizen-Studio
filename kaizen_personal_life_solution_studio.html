@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAIZEN // Personal Quality & Life-Solution Studio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F9F8F5',
+                        ivory: '#FFFFFF',
+                        stone: '#F2EFE9',
+                        stoneDark: '#E6E2D8',
+                        espresso: '#1C1B19',
+                        slateWarm: '#6E6A63',
+                        terracotta: '#C85A32',
+                        terracottaLight: '#F9ECE6',
+                        sage: '#2D5A4C',
+                        sageLight: '#E9F2EF',
+                        ochre: '#D99B26',
+                        ochreLight: '#FDF6E7'
+                    },
+                    fontFamily: {
+                        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    boxShadow: {
+                        'editorial': '0 2px 10px -2px rgba(28, 27, 25, 0.04), 0 1px 3px -1px rgba(28, 27, 25, 0.03)',
+                        'floating': '0 16px 36px -6px rgba(28, 27, 25, 0.08), 0 4px 12px -2px rgba(28, 27, 25, 0.04)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+        body {
+            background-color: #F9F8F5;
+            color: #1C1B19;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(#E6E2D8 0.65px, transparent 0.65px);
+            background-size: 24px 24px;
+        }
+        /* Subtle editorial scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F2EFE9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D0C9BC;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6E6A63;
+        }
+        .editorial-border {
+            border: 1px solid #E6E2D8;
+        }
+        .tally-group {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            margin-right: 8px;
+            padding: 0 2px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 2px;
+            color: #C85A32;
+            font-weight: 600;
+        }
+        .tally-group.struck::after {
+            content: '';
+            position: absolute;
+            left: -2px;
+            right: 1px;
+            top: 50%;
+            height: 2px;
+            background-color: #C85A32;
+            transform: rotate(-18deg);
+        }
+        .tab-transition {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.35); opacity: 0.2; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+        .special-cause-pulse {
+            animation: pulseRing 2s infinite ease-in-out;
+            transform-origin: center;
+        }
+        input[type="range"] {
+            accent-color: #C85A32;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col lg:flex-row selection:bg-terracotta/15 selection:text-terracotta">
+
+    <!-- LEFT EDITORIAL NAVIGATION SIDEBAR (Desktop) -->
+    <aside class="w-full lg:w-72 bg-ivory border-b lg:border-b-0 lg:border-r border-stoneDark flex flex-col justify-between shrink-0 lg:h-screen lg:sticky lg:top-0 z-30">
+        <div>
+            <!-- Brand Header -->
+            <div class="p-6 pb-5 border-b border-stoneDark flex items-center justify-between">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-terracotta inline-block"></span>
+                        <span class="font-mono text-[11px] uppercase tracking-widest text-slateWarm font-medium">DMAIC Life OS v2.4</span>
+                    </div>
+                    <h1 class="font-serif text-3xl tracking-tight text-espresso mt-0.5">Kaizen Studio</h1>
+                </div>
+                <!-- Belt Status Pill -->
+                <div class="bg-sageLight border border-sage/20 px-2.5 py-1 rounded-full flex items-center gap-1.5" title="Six Sigma Personal Mastery Tier">
+                    <i class="ph-fill ph-medal text-sage text-sm"></i>
+                    <span class="font-mono text-[11px] font-semibold text-sage">Green Belt</span>
+                </div>
+            </div>
+
+            <!-- Philosophy Quote / Principle -->
+            <div class="px-6 py-3.5 bg-stone/60 border-b border-stoneDark">
+                <p class="text-xs text-slateWarm italic font-serif text-[15px] leading-snug">
+                    "We don't question what we don't measure. Reduce variation, not just effort."
+                </p>
+            </div>
+
+            <!-- Navigation Workspaces -->
+            <nav class="p-3 space-y-1" aria-label="Main Workspaces">
+                <div class="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-slateWarm">The Basic 7 (Analytical)</div>
+                
+                <button onclick="switchTab('checksheet')" id="nav-checksheet" class="nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all bg-stone text-espresso font-semibold shadow-sm">
+                    <i class="ph ph-check-square-offset text-lg text-terracotta mt-0.5 shrink-0"></i>
+                    <div>
+                        <div class="text-sm leading-tight">Daily Check Sheet & Flow</div>
+                        <div class="text-[11px] text-slateWarm font-normal mt-0.5">Ritual Flow & Tally Counter</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('rootcause')" id="nav-rootcause" class="nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all text-slateWarm hover:bg-stone/60 hover:text-espresso">
+                    <i class="ph ph-git-Fork text-lg text-slateWarm mt-0.5 shrink-0"></i>
+                    <div>
+                        <div class="text-sm leading-tight">Root-Cause Studio</div>
+                        <div class="text-[11px] text-slateWarm font-normal mt-0.5">Pareto 80/20 & Fishbone Lab</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('spc')" id="nav-spc" class="nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all text-slateWarm hover:bg-stone/60 hover:text-espresso">
+                    <i class="ph ph-chart-line-up text-lg text-slateWarm mt-0.5 shrink-0"></i>
+                    <div>
+                        <div class="text-sm leading-tight">Stability & Correlations</div>
+                        <div class="text-[11px] text-slateWarm font-normal mt-0.5">SPC Control Limits & Scatter</div>
+                    </div>
+                </button>
+
+                <div class="px-3 pt-4 pb-1.5 text-[10px] font-mono uppercase tracking-wider text-slateWarm">The New 7 (Proactive Design)</div>
+
+                <button onclick="switchTab('premortem')" id="nav-premortem" class="nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all text-slateWarm hover:bg-stone/60 hover:text-espresso">
+                    <i class="ph ph-tree-structure text-lg text-slateWarm mt-0.5 shrink-0"></i>
+                    <div>
+                        <div class="text-sm leading-tight">Life Design & Pre-Mortem</div>
+                        <div class="text-[11px] text-slateWarm font-normal mt-0.5">PDPC Resilience & Arrow Path</div>
+                    </div>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Live Process Capability Card (Bottom Sidebar) -->
+        <div class="hidden lg:block p-5 m-3 rounded-xl bg-stone/80 border border-stoneDark">
+            <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-slateWarm">Weekly Capability</span>
+                <span id="sidebar-sigma-badge" class="font-mono text-xs font-semibold text-sage bg-sageLight px-2 py-0.5 rounded">4.2σ</span>
+            </div>
+            <div class="flex items-baseline justify-between">
+                <div>
+                    <div id="sidebar-rty" class="font-mono text-2xl font-semibold text-espresso">85.7%</div>
+                    <div class="text-[11px] text-slateWarm">Rolled Throughput Yield</div>
+                </div>
+                <!-- Mini Bell Curve SVG -->
+                <svg class="w-16 h-10 overflow-visible" viewBox="0 0 60 32">
+                    <line x1="8" y1="2" x2="8" y2="30" stroke="#D99B26" stroke-width="1" stroke-dasharray="2 2"/>
+                    <line x1="52" y1="2" x2="52" y2="30" stroke="#D99B26" stroke-width="1" stroke-dasharray="2 2"/>
+                    <path d="M 2 30 C 14 30, 20 4, 30 4 C 40 4, 46 30, 58 30" fill="rgba(45, 90, 76, 0.12)" stroke="#2D5A4C" stroke-width="1.75"/>
+                </svg>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-stoneDark/80 flex items-center justify-between text-[11px] text-slateWarm">
+                <span> Slip Defects (Week)</span>
+                <span id="sidebar-defect-count" class="font-mono font-semibold text-terracotta">19 tallies</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 min-w-0 pb-24 lg:pb-12">
+        <!-- Top Utility Bar -->
+        <header class="bg-paper/90 backdrop-blur-md sticky top-0 z-20 px-6 lg:px-10 py-4 border-b border-stoneDark flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-mono text-xs text-slateWarm bg-stone px-2.5 py-1 rounded-md border border-stoneDark">WEEK 09 // QUALITY TOOLS</span>
+                <span class="text-xs text-slateWarm hidden sm:inline">•</span>
+                <span class="text-xs text-slateWarm hidden sm:inline" id="header-context-label">Analytical Approach: Define problems after collecting numerical data</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="openTheoryModal()" class="text-xs font-medium text-espresso bg-ivory hover:bg-stone px-3.5 py-2 rounded-lg border border-stoneDark shadow-sm flex items-center gap-2 transition">
+                    <i class="ph ph-book-open-text text-terracotta"></i>
+                    <span>LSS Translation Guide</span>
+                </button>
+                <button onclick="openQuickSlipModal()" class="text-xs font-medium text-ivory bg-terracotta hover:bg-terracotta/90 px-3.5 py-2 rounded-lg shadow-sm flex items-center gap-1.5 transition">
+                    <i class="ph-bold ph-plus"></i>
+                    <span>Log Friction / Slip</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-6 lg:px-10 pt-8">
+
+            <!-- ==========================================
+                 WORKSPACE 1: DAILY CHECK SHEET & FLOW
+                 ========================================== -->
+            <section id="tab-checksheet" class="tab-content tab-transition space-y-8">
+                
+                <!-- Editorial Title & Summary Metrics -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stoneDark pb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-terracotta mb-1">
+                            <span>01 / Process Flow & Check Sheet</span>
+                        </div>
+                        <h2 class="font-serif text-4xl lg:text-5xl text-espresso tracking-tight">Today's Rituals & Friction Tallies</h2>
+                        <p class="text-slateWarm text-sm mt-1.5 max-w-2xl">
+                            In Six Sigma, every task is a process. Standardize your daily sequence below, check off completed rituals, and tally friction triggers without judgment so we can solve the root system.
+                        </p>
+                    </div>
+
+                    <!-- KPI Strip -->
+                    <div class="grid grid-cols-3 gap-3 shrink-0">
+                        <div class="bg-ivory px-4 py-3 rounded-xl editorial-border shadow-editorial">
+                            <div class="text-[11px] font-mono uppercase text-slateWarm">Yield (RTY)</div>
+                            <div id="kpi-rty" class="font-mono text-xl font-semibold text-sage mt-0.5">85.7%</div>
+                        </div>
+                        <div class="bg-ivory px-4 py-3 rounded-xl editorial-border shadow-editorial">
+                            <div class="text-[11px] font-mono uppercase text-slateWarm">Process Sigma</div>
+                            <div id="kpi-sigma" class="font-mono text-xl font-semibold text-espresso mt-0.5">4.2σ</div>
+                        </div>
+                        <div class="bg-ivory px-4 py-3 rounded-xl editorial-border shadow-editorial">
+                            <div class="text-[11px] font-mono uppercase text-slateWarm">Flow Cycle</div>
+                            <div id="kpi-flow" class="font-mono text-xl font-semibold text-terracotta mt-0.5">4/6 Steps</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Empathetic Diagnostic Banner (Hidden until a slip is logged or shown gently) -->
+                <div id="diagnostic-prompt-banner" class="bg-terracottaLight/90 border border-terracotta/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-terracotta text-ivory flex items-center justify-center shrink-0 mt-0.5">
+                            <i class="ph-fill ph-sparkle text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider font-semibold text-terracotta">Management by Fact // Root-Cause Alert</span>
+                            </div>
+                            <h3 id="banner-title" class="text-sm font-semibold text-espresso mt-0.5">
+                                "Revenge Bedtime Scroll" accounts for 42% of your habit variation this week.
+                            </h3>
+                            <p id="banner-subtitle" class="text-xs text-slateWarm mt-0.5">
+                                Instead of relying on willpower, let's inspect the process. Run a 60-second Fishbone diagnosis to isolate the environment or energy trigger.
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="jumpToFishboneFromBanner()" class="shrink-0 bg-espresso text-ivory hover:bg-espresso/90 text-xs font-medium px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm transition">
+                        <span>Diagnose in Fishbone Studio</span>
+                        <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- TOOL 1: INTERACTIVE PROCESS FLOW CHART (Morning & Evening Routine) -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">Basic Tool #1: Flow Chart</span>
+                                <span class="text-xs text-slateWarm">— Illustrate & standardize process steps</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">Standard Operating Ritual (SOP)</h3>
+                        </div>
+
+                        <!-- Routine Switcher -->
+                        <div class="inline-flex bg-stone p-1 rounded-xl border border-stoneDark self-start">
+                            <button onclick="switchFlowRoutine('morning')" id="flow-btn-morning" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition">
+                                <i class="ph-fill ph-sun-horizon text-ochre mr-1"></i> Morning Launch (55m)
+                            </button>
+                            <button onclick="switchFlowRoutine('evening')" id="flow-btn-evening" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition">
+                                <i class="ph-fill ph-moon-stars text-sage mr-1"></i> Evening Shutdown (45m)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Step-by-Step Pill Chain -->
+                    <div id="flow-steps-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 relative">
+                        <!-- Populated via JS -->
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-stone flex flex-wrap items-center justify-between text-xs text-slateWarm gap-2">
+                        <span><i class="ph-fill ph-info text-sage mr-1"></i> Click any step in the sequence to toggle completion and measure your daily Takt time adherence.</span>
+                        <span id="flow-takt-status" class="font-mono text-[11px] text-sage font-medium">Process Status: In Flow</span>
+                    </div>
+                </div>
+
+                <!-- TWO-COLUMN GRID: HABIT CHECK SHEET & DEFECT/SLIP TALLY COUNTER -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- LEFT 7 COLS: Weekly Habit Check Sheet Matrix -->
+                    <div class="lg:col-span-7 bg-ivory rounded-2xl editorial-border shadow-editorial p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">Basic Tool #5: Check Sheet (Consistency)</span>
+                                    <h3 class="font-serif text-2xl text-espresso mt-0.5">Weekly Ritual Check Sheet</h3>
+                                </div>
+                                <span class="font-mono text-xs text-slateWarm bg-stone px-2.5 py-1 rounded-md">Mon — Sun</span>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b border-stoneDark text-[11px] font-mono uppercase text-slateWarm">
+                                            <th class="py-2.5 pr-3 font-medium">Core Habit (CTQ)</th>
+                                            <th class="py-2.5 px-1.5 text-center">M</th>
+                                            <th class="py-2.5 px-1.5 text-center">T</th>
+                                            <th class="py-2.5 px-1.5 text-center">W</th>
+                                            <th class="py-2.5 px-1.5 text-center">T</th>
+                                            <th class="py-2.5 px-1.5 text-center">F</th>
+                                            <th class="py-2.5 px-1.5 text-center">S</th>
+                                            <th class="py-2.5 px-1.5 text-center">S</th>
+                                            <th class="py-2.5 pl-2 text-right">Yield</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="habit-checksheet-body" class="divide-y divide-stone text-sm">
+                                        <!-- Populated via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 pt-4 border-t border-stoneDark flex items-center justify-between text-xs text-slateWarm">
+                            <div class="flex items-center gap-4">
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-sage inline-block"></span> Completed</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-terracottaLight border border-terracotta inline-block"></span> Slip Logged</span>
+                            </div>
+                            <span class="font-mono text-[11px]">Click any cell to cycle state</span>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT 5 COLS: Friction & Blocker Tally Sheet (Muda / Defects) -->
+                    <div class="lg:col-span-5 bg-ivory rounded-2xl editorial-border shadow-editorial p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-terracotta font-semibold">Defect Tally Counter (Muda)</span>
+                                <span class="font-mono text-[11px] text-slateWarm">Feeds Pareto 80/20</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso">Habit Blockers & Friction</h3>
+                            <p class="text-xs text-slateWarm mt-1 mb-4">
+                                Tally the exact trigger whenever a habit slips. Counting frequency reveals which vital few causes deserve your energy.
+                            </p>
+
+                            <div id="friction-tally-list" class="space-y-2.5">
+                                <!-- Populated via JS with authentic |||| tallies -->
+                            </div>
+                        </div>
+
+                        <!-- Quick Add Custom Friction Trigger -->
+                        <div class="mt-5 pt-4 border-t border-stoneDark">
+                            <form onsubmit="addCustomFrictionCategory(event)" class="flex gap-2">
+                                <input type="text" id="new-friction-input" placeholder="Add new blocker (e.g., Skipped lunch)..." required
+                                    class="flex-1 bg-stone/70 border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso placeholder:text-slateWarm focus:outline-none focus:border-terracotta">
+                                <button type="submit" class="bg-espresso text-ivory hover:bg-espresso/90 px-3.5 py-2 rounded-xl text-xs font-medium shrink-0 transition">
+                                    + Add Trigger
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 WORKSPACE 2: ROOT-CAUSE STUDIO (PARETO & FISHBONE)
+                 ========================================== -->
+            <section id="tab-rootcause" class="tab-content hidden tab-transition space-y-8">
+                
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stoneDark pb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-terracotta mb-1">
+                            <span>02 / Pareto 80/20 & Ishikawa Fishbone</span>
+                        </div>
+                        <h2 class="font-serif text-4xl lg:text-5xl text-espresso tracking-tight">Root-Cause Diagnostic Studio</h2>
+                        <p class="text-slateWarm text-sm mt-1.5 max-w-2xl">
+                            Prioritize with the Pareto 80/20 rule to isolate the "Vital Few" habit blockers, then dissect their underlying structure using Dr. Kaoru Ishikawa's Fishbone diagram.
+                        </p>
+                    </div>
+
+                    <!-- Timeframe Toggle for Pareto -->
+                    <div class="inline-flex bg-stone p-1 rounded-xl border border-stoneDark self-start">
+                        <button onclick="setParetoTimeframe('week')" id="pareto-tf-week" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition">
+                            This Week (Live Tallies)
+                        </button>
+                        <button onclick="setParetoTimeframe('month')" id="pareto-tf-month" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition">
+                            30-Day Rolling
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PARETO 80/20 INTERACTIVE DUAL-AXIS CHART -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-terracotta font-semibold">Basic Tool #4: Pareto Diagram</span>
+                                <span class="text-xs text-slateWarm">— Separate the "Vital Few" from the "Trivial Many"</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">80/20 Friction Prioritization Curve</h3>
+                        </div>
+
+                        <!-- Vital Few Highlight Pill -->
+                        <div id="pareto-insight-pill" class="bg-ochreLight border border-ochre/30 px-4 py-2 rounded-xl flex items-center gap-2.5">
+                            <i class="ph-fill ph-Warning-circle text-ochre text-lg"></i>
+                            <div class="text-xs">
+                                <span class="font-semibold text-espresso">Vital Few Identified:</span>
+                                <span id="pareto-vital-text" class="text-slateWarm">Top 2 triggers cause 68% of all missed habits. Solve these first.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Responsive SVG Pareto Chart -->
+                    <div class="w-full overflow-x-auto">
+                        <div class="min-w-[640px]">
+                            <svg id="pareto-svg" class="w-full h-72 overflow-visible" viewBox="0 0 760 270"></svg>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-stone flex flex-wrap items-center justify-between gap-4 text-xs text-slateWarm">
+                        <div class="flex items-center gap-5">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-terracotta inline-block"></span> Vital Few (≤ 80% Cumulative)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-stoneDark inline-block"></span> Trivial Many (> 80%)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 bg-espresso inline-block"></span> Cumulative % Curve</span>
+                            <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 border-b border-dashed border-ochre inline-block"></span> 80% Threshold</span>
+                        </div>
+                        <span class="font-mono text-[11px]">Click "+1" on any bar label below or in Tab 1 to watch Pareto recalculate live</span>
+                    </div>
+                </div>
+
+                <!-- INTERACTIVE ISHIKAWA FISHBONE DIAGRAM & 5-WHYS -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">Basic Tool #3: Fishbone (Ishikawa) Diagram</span>
+                                <span class="text-xs text-slateWarm">— Organize root causes systematically</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">Interactive Cause & Effect Bone Structure</h3>
+                        </div>
+
+                        <!-- Problem Head Selector -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-xs font-mono uppercase text-slateWarm">Target Slip:</label>
+                            <select id="fishbone-problem-select" onchange="switchFishboneProblem(this.value)" class="bg-stone border border-stoneDark rounded-xl px-3.5 py-2 text-xs font-semibold text-espresso focus:outline-none focus:border-terracotta">
+                                <option value="workout">Missed 6:30 AM Strength & Mobility</option>
+                                <option value="deepwork">Broken 90-Min Deep Work Block</option>
+                                <option value="sleep">Asleep After 11:30 PM Target</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Fishbone Visual Layout (4 Bone Quadrants + Central Spine + Problem Head) -->
+                    <div class="relative bg-paper rounded-2xl p-5 lg:p-7 border border-stoneDark">
+                        
+                        <!-- Top 2 Bone Categories -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8 relative z-10">
+                            <!-- Bone 1: Environment & Space -->
+                            <div class="bg-ivory p-4 rounded-xl border border-stoneDark shadow-sm relative">
+                                <div class="flex items-center justify-between mb-2.5">
+                                    <span class="font-mono text-xs uppercase tracking-wider font-semibold text-espresso flex items-center gap-1.5">
+                                        <i class="ph-fill ph-house-line text-terracotta"></i> 1. Environment & Space
+                                    </span>
+                                    <button onclick="promptAddBoneCause('environment')" class="text-[11px] font-mono text-terracotta hover:underline">+ Add Cause</button>
+                                </div>
+                                <div id="bone-list-environment" class="space-y-1.5"></div>
+                                <!-- Diagonal Connector Line (Visual Rib) -->
+                                <div class="hidden md:block absolute -bottom-8 right-12 w-0.5 h-8 bg-stoneDark transform -rotate-25 origin-top"></div>
+                            </div>
+
+                            <!-- Bone 2: Energy & Physiology -->
+                            <div class="bg-ivory p-4 rounded-xl border border-stoneDark shadow-sm relative">
+                                <div class="flex items-center justify-between mb-2.5">
+                                    <span class="font-mono text-xs uppercase tracking-wider font-semibold text-espresso flex items-center gap-1.5">
+                                        <i class="ph-fill ph-heartbeat text-terracotta"></i> 2. Energy & Physiology
+                                    </span>
+                                    <button onclick="promptAddBoneCause('energy')" class="text-[11px] font-mono text-terracotta hover:underline">+ Add Cause</button>
+                                </div>
+                                <div id="bone-list-energy" class="space-y-1.5"></div>
+                                <div class="hidden md:block absolute -bottom-8 right-12 w-0.5 h-8 bg-stoneDark transform -rotate-25 origin-top"></div>
+                            </div>
+                        </div>
+
+                        <!-- CENTRAL FISHBONE SPINE & HEAD -->
+                        <div class="my-2 flex items-center">
+                            <div class="flex-1 h-1 bg-espresso rounded-l-full relative flex items-center justify-around">
+                                <span class="w-3 h-3 rounded-full bg-espresso"></span>
+                                <span class="font-mono text-[10px] uppercase tracking-widest bg-paper px-2 text-slateWarm">Ishikawa Causal Spine</span>
+                                <span class="w-3 h-3 rounded-full bg-espresso"></span>
+                            </div>
+                            <!-- Arrowhead -->
+                            <div class="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-espresso"></div>
+                            <!-- Fish Head (The Defect / Effect) -->
+                            <div class="bg-terracotta text-ivory px-5 py-3.5 rounded-2xl shadow-md max-w-xs shrink-0 border-2 border-espresso/10">
+                                <div class="font-mono text-[10px] uppercase tracking-widest opacity-80">Effect (Habit Defect)</div>
+                                <div id="fishbone-head-label" class="font-serif text-xl leading-tight mt-0.5">Missed 6:30 AM Strength & Mobility</div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom 2 Bone Categories -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-8 relative z-10">
+                            <!-- Bone 3: Routine & Preparation (Method) -->
+                            <div class="bg-ivory p-4 rounded-xl border border-stoneDark shadow-sm relative">
+                                <div class="hidden md:block absolute -top-8 right-12 w-0.5 h-8 bg-stoneDark transform rotate-25 origin-bottom"></div>
+                                <div class="flex items-center justify-between mb-2.5">
+                                    <span class="font-mono text-xs uppercase tracking-wider font-semibold text-espresso flex items-center gap-1.5">
+                                        <i class="ph-fill ph-list-checks text-sage"></i> 3. Routine & Prep (Method)
+                                    </span>
+                                    <button onclick="promptAddBoneCause('routine')" class="text-[11px] font-mono text-terracotta hover:underline">+ Add Cause</button>
+                                </div>
+                                <div id="bone-list-routine" class="space-y-1.5"></div>
+                            </div>
+
+                            <!-- Bone 4: Mindset & Digital Cue -->
+                            <div class="bg-ivory p-4 rounded-xl border border-stoneDark shadow-sm relative">
+                                <div class="hidden md:block absolute -top-8 right-12 w-0.5 h-8 bg-stoneDark transform rotate-25 origin-bottom"></div>
+                                <div class="flex items-center justify-between mb-2.5">
+                                    <span class="font-mono text-xs uppercase tracking-wider font-semibold text-espresso flex items-center gap-1.5">
+                                        <i class="ph-fill ph-device-mobile-camera text-sage"></i> 4. Mindset & Digital Cues
+                                    </span>
+                                    <button onclick="promptAddBoneCause('mindset')" class="text-[11px] font-mono text-terracotta hover:underline">+ Add Cause</button>
+                                </div>
+                                <div id="bone-list-mindset" class="space-y-1.5"></div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Root Cause Action Box (Poka-Yoke Mistake Proofing) -->
+                        <div class="mt-6 bg-sageLight border border-sage/30 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex items-start gap-3">
+                                <i class="ph-fill ph-shield-check text-sage text-xl mt-0.5"></i>
+                                <div>
+                                    <div class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">Shigeo Shingo Poka-Yoke (Mistake-Proofing Countermeasure)</div>
+                                    <div id="fishbone-active-root" class="text-sm font-semibold text-espresso mt-0.5">
+                                        Primary Root Cause: Phone kept on nightstand within arm's reach
+                                    </div>
+                                    <div id="fishbone-active-solution" class="text-xs text-slateWarm mt-0.5">
+                                        Countermeasure: Plug phone charger in kitchen at 10:15 PM & place kettlebell beside bedroom door.
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="font-mono text-[11px] text-sage bg-ivory px-3 py-1.5 rounded-lg border border-sage/20 shrink-0">
+                                Click any cause node above to set primary
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 WORKSPACE 3: STABILITY & CORRELATIONS (SPC & SCATTER)
+                 ========================================== -->
+            <section id="tab-spc" class="tab-content hidden tab-transition space-y-8">
+                
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stoneDark pb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-sage mb-1">
+                            <span>03 / Statistical Process Control (SPC) & Scatter Lab</span>
+                        </div>
+                        <h2 class="font-serif text-4xl lg:text-5xl text-espresso tracking-tight">Personal Rhythm & Control Limits</h2>
+                        <p class="text-slateWarm text-sm mt-1.5 max-w-2xl">
+                            Six Sigma's core goal is reducing variation. Track whether your daily rhythms stay within natural statistical control (UCL/LCL) or suffer from assignable "Special Cause" spikes.
+                        </p>
+                    </div>
+
+                    <!-- Metric Selector Pills -->
+                    <div class="inline-flex bg-stone p-1 rounded-xl border border-stoneDark self-start">
+                        <button onclick="selectSpcMetric('sleep')" id="spc-btn-sleep" class="px-3 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition">
+                            Restorative Sleep (hrs)
+                        </button>
+                        <button onclick="selectSpcMetric('focus')" id="spc-btn-focus" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition">
+                            Deep Focus (mins)
+                        </button>
+                        <button onclick="selectSpcMetric('screen')" id="spc-btn-screen" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition">
+                            Leisure Screen (hrs)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SPC CONTROL CHART CARD -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">Basic Tool #7: Control Chart (I-MR)</span>
+                                <span class="text-xs text-slateWarm">— Distinguish Common Cause noise from Special Cause events</span>
+                            </div>
+                            <h3 id="spc-chart-title" class="font-serif text-2xl text-espresso mt-0.5">14-Day Restorative Sleep Stability</h3>
+                        </div>
+
+                        <!-- Statistical Readout Badges (UCL, Mean, LCL) -->
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <div class="bg-stone px-3 py-1.5 rounded-lg border border-stoneDark">
+                                <span class="font-mono text-[10px] uppercase text-slateWarm block">Upper Control (UCL)</span>
+                                <span id="spc-ucl-val" class="font-mono text-sm font-semibold text-espresso">8.45 hrs</span>
+                            </div>
+                            <div class="bg-sageLight px-3 py-1.5 rounded-lg border border-sage/20">
+                                <span class="font-mono text-[10px] uppercase text-sage block">Process Mean (X̄)</span>
+                                <span id="spc-mean-val" class="font-mono text-sm font-semibold text-sage">7.32 hrs</span>
+                            </div>
+                            <div class="bg-stone px-3 py-1.5 rounded-lg border border-stoneDark">
+                                <span class="font-mono text-[10px] uppercase text-slateWarm block">Lower Control (LCL)</span>
+                                <span id="spc-lcl-val" class="font-mono text-sm font-semibold text-espresso">6.18 hrs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive SVG Control Chart -->
+                    <div class="w-full overflow-x-auto">
+                        <div class="min-w-[640px]">
+                            <svg id="spc-svg" class="w-full h-72 overflow-visible" viewBox="0 0 760 260"></svg>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Controls: Customer Specification Limit Slider + Log Today's Data Point -->
+                    <div class="mt-6 pt-5 border-t border-stoneDark grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        
+                        <!-- Specification Limit (Voice of Customer) Slider -->
+                        <div class="md:col-span-6 bg-paper p-4 rounded-xl border border-stoneDark">
+                            <div class="flex items-center justify-between text-xs mb-1.5">
+                                <span class="font-semibold text-espresso flex items-center gap-1.5">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-ochre inline-block"></span>
+                                    Personal Target / Spec Limit (Voice of You)
+                                </span>
+                                <span id="spc-spec-label" class="font-mono font-semibold text-ochre">7.0 hrs min</span>
+                            </div>
+                            <input type="range" id="spc-spec-slider" min="5.5" max="8.5" step="0.1" value="7.0" oninput="updateSpcSpecLimit(this.value)" class="w-full cursor-pointer">
+                            <p class="text-[11px] text-slateWarm mt-1">
+                                Note from Week 9: <strong>Control Limits</strong> (dashed) represent the voice of your current process; <strong>Specification Limits</strong> (amber line) separate good vs. bad days for your goals.
+                            </p>
+                        </div>
+
+                        <!-- Log Today's Metric Value -->
+                        <div class="md:col-span-6 bg-paper p-4 rounded-xl border border-stoneDark flex flex-col justify-between">
+                            <div class="text-xs font-semibold text-espresso mb-2">Log Today's Reading (Day 15) & Recalculate Limits</div>
+                            <form onsubmit="logNewSpcPoint(event)" class="flex items-center gap-2">
+                                <input type="number" id="spc-new-val" step="0.1" required placeholder="e.g. 7.6"
+                                    class="w-28 bg-ivory border border-stoneDark rounded-xl px-3 py-2 font-mono text-xs text-espresso focus:outline-none focus:border-sage">
+                                <input type="text" id="spc-new-note" placeholder="Optional note (e.g., Late flight)..."
+                                    class="flex-1 bg-ivory border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso focus:outline-none focus:border-sage">
+                                <button type="submit" class="bg-sage text-ivory hover:bg-sage/90 px-4 py-2 rounded-xl text-xs font-medium shrink-0 transition">
+                                    Plot Point
+                                </button>
+                            </form>
+                            <div id="spc-special-alert" class="text-[11px] text-terracotta font-mono mt-2">
+                                ● Red pulsing point = Assignable Special Cause Variation outside LCL/UCL.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SCATTER DIAGRAM (CORRELATION EXPLORER) -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-terracotta font-semibold">Basic Tool #6: Scatter Diagram</span>
+                                <span class="text-xs text-slateWarm">— Test cause-and-effect relationships between two variables</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">Personal Habit Correlation Explorer</h3>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <select id="scatter-pair-select" onchange="renderScatterChart()" class="bg-stone border border-stoneDark rounded-xl px-3.5 py-2 text-xs font-semibold text-espresso focus:outline-none">
+                                <option value="sleep_focus">X: Sleep Hours vs. Y: Deep Focus Score</option>
+                                <option value="caffeine_sleep">X: Afternoon Caffeine (mg) vs. Y: Deep Sleep (hrs)</option>
+                                <option value="steps_mood">X: Morning Sunlight Walk (mins) vs. Y: Evening Calmness</option>
+                            </select>
+                            <span id="scatter-r-badge" class="font-mono text-xs font-semibold px-3 py-2 rounded-xl bg-sageLight text-sage border border-sage/20">
+                                r = +0.86 (Strong Positive)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        <div class="lg:col-span-8 w-full overflow-x-auto">
+                            <svg id="scatter-svg" class="w-full h-64 overflow-visible" viewBox="0 0 540 240"></svg>
+                        </div>
+                        <div class="lg:col-span-4 bg-paper p-5 rounded-2xl border border-stoneDark space-y-3">
+                            <div class="font-mono text-[11px] uppercase tracking-wider text-slateWarm">Statistical Takeaway</div>
+                            <h4 id="scatter-takeaway-title" class="font-serif text-2xl text-espresso leading-snug">
+                                Every +1 hr of sleep above 6.5h yields +24 mins of unbroken focus.
+                            </h4>
+                            <p id="scatter-takeaway-desc" class="text-xs text-slateWarm leading-relaxed">
+                                Instead of forcing longer desk hours when tired, your scatter data proves that protecting your 10:30 PM wind-down is the highest-leverage upstream variable.
+                            </p>
+                            <div class="pt-3 border-t border-stoneDark flex items-center justify-between text-[11px] font-mono text-slateWarm">
+                                <span>Sample Size: n = 16 days</span>
+                                <span>Linear Fit R² = 0.74</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ==========================================
+                 WORKSPACE 4: LIFE DESIGN & PRE-MORTEM (PDPC & ARROW)
+                 ========================================== -->
+            <section id="tab-premortem" class="tab-content hidden tab-transition space-y-8">
+                
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-stoneDark pb-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-sage mb-1">
+                            <span>04 / The Seven New Tools (Verbal Data -> Proactive Plans)</span>
+                        </div>
+                        <h2 class="font-serif text-4xl lg:text-5xl text-espresso tracking-tight">PDPC Pre-Mortem & Arrow Network</h2>
+                        <p class="text-slateWarm text-sm mt-1.5 max-w-2xl">
+                            While the Basic 7 tools analyze numerical past data, the New 7 tools organize verbal ideas <em>before</em> you begin—predicting future obstacles (PDPC) and mapping your critical path (Arrow Diagram).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- NEW TOOL #6: PROCESS DECISION PROGRAM CHART (PDPC) -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-terracotta font-semibold">New Tool #6: Process Decision Program Chart (PDPC)</span>
+                                <span class="text-xs text-slateWarm">— Predict future events & design countermeasures proactively</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">Resilience Pre-Mortem Tree: "30-Day Metabolic & Deep Work Reset"</h3>
+                        </div>
+
+                        <button onclick="openAddPdpcModal()" class="bg-espresso text-ivory hover:bg-espresso/90 px-3.5 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 self-start transition">
+                            <i class="ph-bold ph-plus"></i>
+                            <span>Add "What Could Go Wrong?" Branch</span>
+                        </button>
+                    </div>
+
+                    <!-- PDPC 4-Tier Visual Hierarchy -->
+                    <div class="bg-paper rounded-2xl p-5 lg:p-6 border border-stoneDark">
+                        <!-- Level 1: Top Objective -->
+                        <div class="flex justify-center mb-6">
+                            <div class="bg-espresso text-ivory px-6 py-3 rounded-xl shadow-sm text-center max-w-md">
+                                <div class="font-mono text-[10px] uppercase tracking-widest text-stoneDark">Level 1: Core Life Objective</div>
+                                <div class="font-serif text-xl mt-0.5">Complete 30-Day Sugar Reset & 6:30 AM Training</div>
+                            </div>
+                        </div>
+
+                        <!-- Level 2, 3, 4 Columns -->
+                        <div id="pdpc-columns-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW TOOL #5: ARROW DIAGRAM (CRITICAL PATH NETWORK) -->
+                <div class="bg-ivory rounded-2xl editorial-border shadow-editorial p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-semibold">New Tool #5: Arrow Diagram (CPM Network)</span>
+                                <span class="text-xs text-slateWarm">— Sequence dependent milestones & identify the Critical Path</span>
+                            </div>
+                            <h3 class="font-serif text-2xl text-espresso mt-0.5">Goal Execution Network: Half-Marathon Sub-1:45 Prep</h3>
+                        </div>
+                        <div class="font-mono text-xs bg-stone px-3 py-1.5 rounded-lg border border-stoneDark">
+                            Critical Path Duration: <strong id="arrow-total-days" class="text-terracotta">42 Days</strong> (<span id="arrow-completed-count">3/6</span> Nodes Done)
+                        </div>
+                    </div>
+
+                    <!-- Interactive Node-and-Arrow Flow -->
+                    <div id="arrow-diagram-container" class="grid grid-cols-1 md:grid-cols-6 gap-3">
+                        <!-- Populated via JS -->
+                    </div>
+                    <p class="text-xs text-slateWarm mt-4">
+                        <i class="ph-fill ph-cursor-click text-terracotta mr-1"></i> Click any milestone node above to toggle completion status and inspect slack vs. critical path tasks.
+                    </p>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-ivory/95 backdrop-blur-md border-t border-stoneDark px-2 py-2 flex justify-around items-center z-40">
+        <button onclick="switchTab('checksheet')" id="mob-nav-checksheet" class="flex flex-col items-center py-1 px-3 rounded-lg text-terracotta font-semibold">
+            <i class="ph ph-check-square-offset text-xl"></i>
+            <span class="text-[10px] mt-0.5">Check Sheet</span>
+        </button>
+        <button onclick="switchTab('rootcause')" id="mob-nav-rootcause" class="flex flex-col items-center py-1 px-3 rounded-lg text-slateWarm">
+            <i class="ph ph-git-fork text-xl"></i>
+            <span class="text-[10px] mt-0.5">80/20 & Bone</span>
+        </button>
+        <button onclick="switchTab('spc')" id="mob-nav-spc" class="flex flex-col items-center py-1 px-3 rounded-lg text-slateWarm">
+            <i class="ph ph-chart-line-up text-xl"></i>
+            <span class="text-[10px] mt-0.5">SPC Limits</span>
+        </button>
+        <button onclick="switchTab('premortem')" id="mob-nav-premortem" class="flex flex-col items-center py-1 px-3 rounded-lg text-slateWarm">
+            <i class="ph ph-tree-structure text-xl"></i>
+            <span class="text-[10px] mt-0.5">PDPC Plan</span>
+        </button>
+    </nav>
+
+    <!-- ==========================================
+         MODAL 1: LSS WEEK 09 TRANSLATION GUIDE
+         ========================================== -->
+    <div id="theory-modal" class="fixed inset-0 bg-espresso/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-ivory rounded-2xl max-w-2xl w-full p-6 lg:p-8 editorial-border shadow-floating max-h-[85vh] overflow-y-auto">
+            <div class="flex items-start justify-between border-b border-stoneDark pb-4">
+                <div>
+                    <span class="font-mono text-[11px] uppercase tracking-widest text-terracotta">Week 09 Lecture Translation</span>
+                    <h3 class="font-serif text-3xl text-espresso mt-0.5">How Industrial Quality Tools Solve Personal Habits</h3>
+                </div>
+                <button onclick="closeTheoryModal()" class="text-slateWarm hover:text-espresso p-1">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 my-5 text-xs leading-relaxed text-slateWarm">
+                <div class="p-4 rounded-xl bg-paper border border-stoneDark">
+                    <div class="font-semibold text-espresso text-sm mb-1">1. Basic Seven Tools (Analytical Approach — After Numerical Data)</div>
+                    <p>Used to count occurrences, visualize distributions, and eliminate variation once you start tracking:</p>
+                    <ul class="mt-2 space-y-1.5 list-disc list-inside text-espresso/90">
+                        <li><strong>Check Sheets:</strong> Structured daily habit tables & <span class="font-mono text-terracotta">||||</span> tally counters for habit blockers.</li>
+                        <li><strong>Flow Charts:</strong> Standardizing your Morning & Evening sequences to reduce decision fatigue.</li>
+                        <li><strong>Pareto Diagram (80/20):</strong> Ranking friction tallies so you solve the 20% of triggers causing 80% of missed habits.</li>
+                        <li><strong>Fishbone (Ishikawa) Diagram:</strong> Mapping root causes across Environment, Energy, Routine, and Mindset instead of blaming "willpower".</li>
+                        <li><strong>SPC Control Charts:</strong> Plotting your natural baseline (UCL/LCL) vs. your target Specification Limits.</li>
+                        <li><strong>Scatter Diagram:</strong> Proving correlations between upstream habits (e.g., Sleep vs. Focus).</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 rounded-xl bg-paper border border-stoneDark">
+                    <div class="font-semibold text-espresso text-sm mb-1">2. New Seven Tools (Proactive Approach — Verbal Data Before Execution)</div>
+                    <p>Used to organize ideas, predict future obstacles, and plan complex goals before failure happens:</p>
+                    <ul class="mt-2 space-y-1.5 list-disc list-inside text-espresso/90">
+                        <li><strong>PDPC (Process Decision Program Chart):</strong> A pre-mortem tree that anticipates "What could go wrong?" (e.g., rainy morning, late dinner) and locks in backup SOPs in advance.</li>
+                        <li><strong>Arrow Diagram:</strong> Critical path sequencing for multi-week life goals.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <button onclick="closeTheoryModal()" class="bg-espresso text-ivory px-5 py-2.5 rounded-xl text-xs font-medium">Got It, Back to Studio</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 2: QUICK LOG FRICTION / SLIP
+         ========================================== -->
+    <div id="quick-slip-modal" class="fixed inset-0 bg-espresso/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-ivory rounded-2xl max-w-md w-full p-6 editorial-border shadow-floating">
+            <div class="flex items-start justify-between border-b border-stoneDark pb-3">
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-terracotta">Non-Judgmental Data Capture</span>
+                    <h3 class="font-serif text-2xl text-espresso">Log a Habit Blocker Tally</h3>
+                </div>
+                <button onclick="closeQuickSlipModal()" class="text-slateWarm hover:text-espresso p-1">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slateWarm mt-3">
+                Every slip is simply a data point pointing to a process flaw. Which trigger caused friction today?
+            </p>
+            <div id="modal-quick-tally-buttons" class="space-y-2 my-4">
+                <!-- Populated via JS -->
+            </div>
+            <div class="flex justify-end">
+                <button onclick="closeQuickSlipModal()" class="text-xs text-slateWarm hover:text-espresso px-3 py-1.5">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 3: ADD PDPC BRANCH MODAL
+         ========================================== -->
+    <div id="pdpc-modal" class="fixed inset-0 bg-espresso/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-ivory rounded-2xl max-w-md w-full p-6 editorial-border shadow-floating">
+            <div class="flex items-start justify-between border-b border-stoneDark pb-3">
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-sage">PDPC Proactive Planning</span>
+                    <h3 class="font-serif text-2xl text-espresso">Add Obstacle & Countermeasure</h3>
+                </div>
+                <button onclick="closeAddPdpcModal()" class="text-slateWarm hover:text-espresso p-1">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+            <form onsubmit="submitNewPdpcBranch(event)" class="space-y-3.5 mt-4">
+                <div>
+                    <label class="block text-xs font-medium text-espresso mb-1">Plan Phase / Pillar</label>
+                    <select id="pdpc-pillar-select" class="w-full bg-stone border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso">
+                        <option value="0">Pillar 1: Morning Fasted Training</option>
+                        <option value="1">Pillar 2: Zero Refined Sugar Nutrition</option>
+                        <option value="2">Pillar 3: 10:15 PM Digital Sunset</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-espresso mb-1">What Could Go Wrong? (Predicted Risk)</label>
+                    <input type="text" id="pdpc-risk-input" required placeholder="e.g., Unexpected late client call at 9 PM"
+                        class="w-full bg-paper border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-espresso mb-1">Pre-Planned Countermeasure (If-Then SOP)</label>
+                    <input type="text" id="pdpc-counter-input" required placeholder="e.g., Switch to 10-min breathwork + magnesium"
+                        class="w-full bg-paper border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddPdpcModal()" class="text-xs text-slateWarm px-3 py-2">Cancel</button>
+                    <button type="submit" class="bg-sage text-ivory px-4 py-2 rounded-xl text-xs font-medium">Add to PDPC Tree</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 4: ADD FISHBONE CAUSE MODAL
+         ========================================== -->
+    <div id="bone-modal" class="fixed inset-0 bg-espresso/50 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+        <div class="bg-ivory rounded-2xl max-w-md w-full p-6 editorial-border shadow-floating">
+            <div class="flex items-start justify-between border-b border-stoneDark pb-3">
+                <div>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-terracotta">Ishikawa Root Cause</span>
+                    <h3 id="bone-modal-title" class="font-serif text-2xl text-espresso">Add Root Cause Node</h3>
+                </div>
+                <button onclick="closeBoneModal()" class="text-slateWarm hover:text-espresso p-1">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+            </div>
+            <form onsubmit="submitNewBoneCause(event)" class="space-y-3.5 mt-4">
+                <input type="hidden" id="bone-category-hidden">
+                <div>
+                    <label class="block text-xs font-medium text-espresso mb-1">Specific Root Cause (Why did it happen?)</label>
+                    <input type="text" id="bone-cause-input" required placeholder="e.g., Gym clothes not laid out night before"
+                        class="w-full bg-paper border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-espresso mb-1">Micro-Solution (Poka-Yoke Fix)</label>
+                    <input type="text" id="bone-fix-input" required placeholder="e.g., Pack gym bag right after dinner cleanup"
+                        class="w-full bg-paper border border-stoneDark rounded-xl px-3 py-2 text-xs text-espresso">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeBoneModal()" class="text-xs text-slateWarm px-3 py-2">Cancel</button>
+                    <button type="submit" class="bg-terracotta text-ivory px-4 py-2 rounded-xl text-xs font-medium">Attach to Bone</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-box" class="fixed bottom-20 lg:bottom-6 right-6 bg-espresso text-ivory px-4 py-3 rounded-xl shadow-floating border border-stoneDark/20 flex items-center gap-2.5 text-xs z-50 opacity-0 pointer-events-none transition-all duration-300 transform translate-y-2">
+        <i class="ph-fill ph-check-circle text-sage text-base"></i>
+        <span id="toast-text">Updated process metrics</span>
+    </div>
+
+    <!-- APPLICATION STATE & INTERACTIVE LOGIC -->
+    <script>
+        // ==========================================
+        // 1. CENTRAL APPLICATION DATA STORE
+        // ==========================================
+        const state = {
+            activeTab: 'checksheet',
+            activeFlowRoutine: 'morning',
+            paretoTimeframe: 'week',
+            activeFishboneProblem: 'workout',
+            activeSpcMetric: 'sleep',
+
+            // Flow Chart Routines (Basic Tool #1)
+            flowRoutines: {
+                morning: [
+                    { id: 'm1', step: '01', name: 'Hydrate + Minerals', duration: '5m', type: 'Input', done: true },
+                    { id: 'm2', step: '02', name: 'Outdoor Sunlight Walk', duration: '15m', type: 'Process', done: true },
+                    { id: 'm3', step: '03', name: 'Zone 2 / Mobility Flow', duration: '20m', type: 'Process', done: true },
+                    { id: 'm4', step: '04', name: 'No-Phone Espresso', duration: '10m', type: 'Gate', done: true },
+                    { id: 'm5', step: '05', name: 'Write Top 3 MITs', duration: '5m', type: 'Output', done: false },
+                    { id: 'm6', step: '06', name: '90m Deep Work Launch', duration: '90m', type: 'Core CTQ', done: false }
+                ],
+                evening: [
+                    { id: 'e1', step: '01', name: 'Log Daily Check Sheet', duration: '5m', type: 'Audit', done: true },
+                    { id: 'e2', step: '02', name: 'Kitchen Reset & Prep', duration: '15m', type: 'Poka-Yoke', done: true },
+                    { id: 'e3', step: '03', name: 'Dock Phone in Kitchen', duration: '2m', type: 'Gate', done: false },
+                    { id: 'e4', step: '04', name: 'Warm Shower / Dim Lights', duration: '10m', type: 'Process', done: false },
+                    { id: 'e5', step: '05', name: 'Fiction Reading (Paper)', duration: '15m', type: 'Wind-down', done: false },
+                    { id: 'e6', step: '06', name: 'Lights Out <= 10:30 PM', duration: '8h', type: 'Core CTQ', done: false }
+                ]
+            },
+
+            // Weekly Habit Check Sheet (Basic Tool #5)
+            // 1 = Done, 0 = Slip/Defect, -1 = Pending
+            habits: [
+                { id: 'h1', name: '6:30 AM Mobility & Strength', target: '30 min', days: [1, 1, 0, 1, 1, 1, 1] },
+                { id: 'h2', name: '90-Min Unbroken Deep Work', target: 'Before 11a', days: [1, 1, 1, 0, 1, 1, 1] },
+                { id: 'h3', name: 'Zero Refined Sugar / Whole Foods', target: '100% clean', days: [1, 0, 1, 1, 1, 0, 1] },
+                { id: 'h4', name: 'Afternoon Caffeine Cutoff', target: 'Before 2p', days: [1, 1, 1, 1, 0, 1, 1] },
+                { id: 'h5', name: 'Digital Sunset (Phone Out of Bed)', target: '10:15 PM', days: [1, 0, 1, 1, 0, 1, 1] },
+                { id: 'h6', name: 'Evening Reading & Mind Dump', target: '20 pages', days: [1, 1, 1, 1, 1, 1, 1] }
+            ],
+
+            // Friction / Blocker Tallies (Feeds Pareto Chart)
+            frictionTriggers: [
+                { id: 'f1', name: 'Revenge Bedtime Scroll', weekCount: 8, monthCount: 24, linkedBone: 'sleep' },
+                { id: 'f2', name: 'Afternoon Caffeine Crash', weekCount: 5, monthCount: 16, linkedBone: 'deepwork' },
+                { id: 'f3', name: 'Skipped Evening Meal Prep', weekCount: 3, monthCount: 9, linkedBone: 'workout' },
+                { id: 'f4', name: 'Unplanned Slack / Email Triage', weekCount: 2, monthCount: 6, linkedBone: 'deepwork' },
+                { id: 'f5', name: 'Social Dinner Late Return', weekCount: 1, monthCount: 4, linkedBone: 'sleep' }
+            ],
+
+            // Ishikawa Fishbone Root Causes per Problem
+            fishboneData: {
+                workout: {
+                    title: 'Missed 6:30 AM Strength & Mobility',
+                    activeCauseId: 'c1',
+                    environment: [
+                        { id: 'c1', text: 'Phone kept on nightstand within reach', fix: 'Plug phone charger in kitchen at 10:15 PM & use analog alarm.' },
+                        { id: 'c2', text: 'Bedroom temperature too cold at 6 AM', fix: 'Set smart thermostat to warm room to 21°C at 6:10 AM.' }
+                    ],
+                    energy: [
+                        { id: 'c3', text: 'Slept past 11:30 PM night before', fix: 'Enforce hard 10:15 PM Digital Sunset alarm.' },
+                        { id: 'c4', text: 'Heavy late-night meal slowed recovery', fix: 'Finish last meal 3 hours before sleep.' }
+                    ],
+                    routine: [
+                        { id: 'c5', text: 'Gym clothes not laid out in bathroom', fix: 'Lay out shorts, socks & kettlebell during evening kitchen reset.' }
+                    ],
+                    mindset: [
+                        { id: 'c6', text: 'All-or-nothing thinking ("Need 60 mins")', fix: 'Adopt 10-minute minimum viable floor routine on low-energy days.' }
+                    ]
+                },
+                deepwork: {
+                    title: 'Broken 90-Min Deep Work Block',
+                    activeCauseId: 'd1',
+                    environment: [
+                        { id: 'd1', text: 'Slack & Email tabs left open in browser', fix: 'Close all messaging apps & run ColdTurkey blocker 8:30–10:00 AM.' }
+                    ],
+                    energy: [
+                        { id: 'd2', text: '2:00 PM glucose spike & crash after lunch', fix: 'Start lunch with greens + 35g protein before complex carbs.' }
+                    ],
+                    routine: [
+                        { id: 'd3', text: 'No clear #1 task defined night before', fix: 'Write exact first 15-minute sub-task on sticky note before shutting down.' }
+                    ],
+                    mindset: [
+                        { id: 'd4', text: 'Discomfort with ambiguous architecture task', fix: 'Use a 10-minute ugly rough draft timer to break inertia.' }
+                    ]
+                },
+                sleep: {
+                    title: 'Asleep After 11:30 PM Target',
+                    activeCauseId: 's1',
+                    environment: [
+                        { id: 's1', text: 'Overhead bright white LEDs on after 9 PM', fix: 'Switch to warm amber desk/floor lamps only after 8:30 PM.' }
+                    ],
+                    energy: [
+                        { id: 's2', text: 'Double espresso consumed at 3:15 PM', fix: 'Switch to decaf or rooibos tea strictly after 1:30 PM.' }
+                    ],
+                    routine: [
+                        { id: 's3', text: 'Started a new streaming episode at 10 PM', fix: 'Replace couch TV after 9:30 PM with paper book on armchair.' }
+                    ],
+                    mindset: [
+                        { id: 's4', text: 'Revenge bedtime procrastination after busy day', fix: 'Schedule 30 mins of guilt-free leisure at 5:30 PM instead of 11 PM.' }
+                    ]
+                }
+            },
+
+            // Statistical Process Control (SPC) Metrics
+            spcMetrics: {
+                sleep: {
+                    name: '14-Day Restorative Sleep Stability',
+                    unit: 'hrs',
+                    specLimit: 7.0,
+                    specDirection: 'min',
+                    sliderMin: 5.5,
+                    sliderMax: 8.5,
+                    sliderStep: 0.1,
+                    data: [
+                        { day: 'D1', val: 7.4, note: 'Normal' },
+                        { day: 'D2', val: 7.6, note: 'Normal' },
+                        { day: 'D3', val: 7.1, note: 'Normal' },
+                        { day: 'D4', val: 7.5, note: 'Normal' },
+                        { day: 'D5', val: 5.4, note: 'Special Cause: Red-eye flight delay' },
+                        { day: 'D6', val: 7.3, note: 'Recovery' },
+                        { day: 'D7', val: 7.8, note: 'Weekend rest' },
+                        { day: 'D8', val: 7.4, note: 'Normal' },
+                        { day: 'D9', val: 7.2, note: 'Normal' },
+                        { day: 'D10', val: 7.5, note: 'Normal' },
+                        { day: 'D11', val: 6.9, note: 'Late dinner' },
+                        { day: 'D12', val: 7.7, note: 'Normal' },
+                        { day: 'D13', val: 7.4, note: 'Normal' },
+                        { day: 'D14', val: 7.6, note: 'Normal' }
+                    ]
+                },
+                focus: {
+                    name: '14-Day Unbroken Deep Focus Blocks',
+                    unit: 'mins',
+                    specLimit: 90,
+                    specDirection: 'min',
+                    sliderMin: 45,
+                    sliderMax: 150,
+                    sliderStep: 5,
+                    data: [
+                        { day: 'D1', val: 105, note: 'Normal' },
+                        { day: 'D2', val: 95, note: 'Normal' },
+                        { day: 'D3', val: 110, note: 'Flow state' },
+                        { day: 'D4', val: 40, note: 'Special Cause: Production server outage' },
+                        { day: 'D5', val: 95, note: 'Normal' },
+                        { day: 'D6', val: 100, note: 'Normal' },
+                        { day: 'D7', val: 90, note: 'Normal' },
+                        { day: 'D8', val: 115, note: 'Normal' },
+                        { day: 'D9', val: 105, note: 'Normal' },
+                        { day: 'D10', val: 95, note: 'Normal' },
+                        { day: 'D11', val: 100, note: 'Normal' },
+                        { day: 'D12', val: 110, note: 'Normal' },
+                        { day: 'D13', val: 95, note: 'Normal' },
+                        { day: 'D14', val: 108, note: 'Normal' }
+                    ]
+                },
+                screen: {
+                    name: '14-Day Leisure Screen Time (Lower is Better)',
+                    unit: 'hrs',
+                    specLimit: 2.0,
+                    specDirection: 'max',
+                    sliderMin: 1.0,
+                    sliderMax: 4.0,
+                    sliderStep: 0.1,
+                    data: [
+                        { day: 'D1', val: 1.6, note: 'Normal' },
+                        { day: 'D2', val: 1.8, note: 'Normal' },
+                        { day: 'D3', val: 1.5, note: 'Normal' },
+                        { day: 'D4', val: 1.7, note: 'Normal' },
+                        { day: 'D5', val: 1.9, note: 'Normal' },
+                        { day: 'D6', val: 3.8, note: 'Special Cause: Sick day doomscrolling' },
+                        { day: 'D7', val: 1.7, note: 'Normal' },
+                        { day: 'D8', val: 1.5, note: 'Normal' },
+                        { day: 'D9', val: 1.6, note: 'Normal' },
+                        { day: 'D10', val: 1.4, note: 'Normal' },
+                        { day: 'D11', val: 1.8, note: 'Normal' },
+                        { day: 'D12', val: 1.5, note: 'Normal' },
+                        { day: 'D13', val: 1.6, note: 'Normal' },
+                        { day: 'D14', val: 1.5, note: 'Normal' }
+                    ]
+                }
+            },
+
+            // PDPC Resilience Pre-Mortem Data (New Tool #6)
+            pdpcPillars: [
+                {
+                    title: 'Pillar 1: 6:30 AM Fasted Training',
+                    subtitle: '4x Strength + 2x Zone 2 Runs',
+                    Scenarios: [
+                        { id: 'p1', risk: 'Heavy rain or storm on outdoor run morning', counter: 'Switch immediately to 20-min indoor kettlebell EMOM SOP', active: true },
+                        { id: 'p2', risk: 'Woke up with <6h sleep due to travel', counter: 'Swap high-CNS lifting for 15-min decompressive mobility flow', active: true }
+                    ]
+                },
+                {
+                    title: 'Pillar 2: Zero Refined Sugar Nutrition',
+                    subtitle: 'Whole foods + 140g protein target',
+                    Scenarios: [
+                        { id: 'p3', risk: 'Restaurant dinner invite with friends', counter: 'Eat 30g whey protein shake before leaving + order sparkling water with lime first', active: true },
+                        { id: 'p4', risk: '3:30 PM afternoon sweet craving at desk', counter: 'Keep dark 85% cacao + roasted macadamias in desk drawer', active: true }
+                    ]
+                },
+                {
+                    title: 'Pillar 3: 10:15 PM Digital Sunset',
+                    subtitle: 'No backlit screens in bedroom',
+                    Scenarios: [
+                        { id: 'p5', risk: 'Urgent thoughts or tomorrow todo anxiety in bed', counter: 'Keep physical MUJI notepad + pen on nightstand for 2-min brain dump', active: true },
+                        { id: 'p6', risk: 'Temptation to check morning calendar on phone', counter: 'Print or write tomorrow schedule on index card at 6:00 PM shutdown', active: false }
+                    ]
+                }
+            ],
+
+            // Arrow Diagram Network Nodes (New Tool #5)
+            arrowNodes: [
+                { id: 'n1', code: '10', title: 'Gait & VO2 Baseline', duration: '4 Days', path: 'Critical Path', done: true },
+                { id: 'n2', code: '20', title: 'Aerobic Base (25km/wk)', duration: '10 Days', path: 'Critical Path', done: true },
+                { id: 'n3', code: '30', title: 'Hip & Ankle Pre-Hab', duration: '7 Days', path: 'Parallel Slack', done: true },
+                { id: 'n4', code: '40', title: 'Lactate Threshold Blocks', duration: '14 Days', path: 'Critical Path', done: false },
+                { id: 'n5', code: '50', title: '18km Peak Long Run', duration: '7 Days', path: 'Critical Path', done: false },
+                { id: 'n6', code: '60', title: 'Glycogen Taper & Race', duration: '7 Days', path: 'Critical Path', done: false }
+            ]
+        };
+
+        // ==========================================
+        // 2. NAVIGATION & WORKSPACE SWITCHING
+        // ==========================================
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            const tabs = ['checksheet', 'rootcause', 'spc', 'premortem'];
+            const contextLabels = {
+                checksheet: 'Analytical Approach: Standardize daily flow & count occurrences on Check Sheets',
+                rootcause: 'Analytical Approach: Prioritize the Vital Few (80/20) & isolate Fishbone root causes',
+                spc: 'Statistical Process Control: Reduce variation & separate signal from noise',
+                premortem: 'The New Seven Tools: Organize verbal data into proactive PDPC countermeasures'
+            };
+
+            document.getElementById('header-context-label').textContent = contextLabels[tabId];
+
+            tabs.forEach(t => {
+                const section = document.getElementById(`tab-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                const mobBtn = document.getElementById(`mob-nav-${t}`);
+
+                if (t === tabId) {
+                    section.classList.remove('hidden');
+                    if (navBtn) {
+                        navBtn.className = 'nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all bg-stone text-espresso font-semibold shadow-sm';
+                        navBtn.querySelector('i').className = navBtn.querySelector('i').className.replace('text-slateWarm', 'text-terracotta');
+                    }
+                    if (mobBtn) {
+                        mobBtn.className = 'flex flex-col items-center py-1 px-3 rounded-lg text-terracotta font-semibold';
+                    }
+                } else {
+                    section.classList.add('hidden');
+                    if (navBtn) {
+                        navBtn.className = 'nav-btn w-full text-left px-3.5 py-3 rounded-xl flex items-start gap-3 transition-all text-slateWarm hover:bg-stone/60 hover:text-espresso';
+                        navBtn.querySelector('i').className = navBtn.querySelector('i').className.replace('text-terracotta', 'text-slateWarm');
+                    }
+                    if (mobBtn) {
+                        mobBtn.className = 'flex flex-col items-center py-1 px-3 rounded-lg text-slateWarm';
+                    }
+                }
+            });
+
+            // Re-render charts on tab open to ensure crisp SVG dimensions
+            if (tabId === 'rootcause') {
+                renderParetoChart();
+                renderFishbone();
+            } else if (tabId === 'spc') {
+                renderSpcChart();
+                renderScatterChart();
+            } else if (tabId === 'premortem') {
+                renderPdpcTree();
+                renderArrowDiagram();
+            }
+        }
+
+        // ==========================================
+        // 3. TAB 1: FLOW CHART & CHECK SHEET LOGIC
+        // ==========================================
+        function switchFlowRoutine(type) {
+            state.activeFlowRoutine = type;
+            const mBtn = document.getElementById('flow-btn-morning');
+            const eBtn = document.getElementById('flow-btn-evening');
+
+            if (type === 'morning') {
+                mBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition';
+                eBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition';
+            } else {
+                eBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition';
+                mBtn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition';
+            }
+            renderFlowSteps();
+        }
+
+        function renderFlowSteps() {
+            const steps = state.flowRoutines[state.activeFlowRoutine];
+            const container = document.getElementById('flow-steps-container');
+            const doneCount = steps.filter(s => s.done).length;
+
+            document.getElementById('kpi-flow').textContent = `${doneCount}/${steps.length} Steps`;
+            const statusEl = document.getElementById('flow-takt-status');
+            statusEl.textContent = doneCount === steps.length
+                ? 'Process Status: 100% Standard Flow Complete'
+                : `Process Status: Step 0${doneCount + 1} Active in Sequence`;
+
+            container.innerHTML = steps.map((s, idx) => `
+                <button onclick="toggleFlowStep('${s.id}')" class="group text-left p-3.5 rounded-xl border transition-all relative flex flex-col justify-between ${
+                    s.done
+                        ? 'bg-sageLight/70 border-sage/30 text-espresso'
+                        : 'bg-paper hover:bg-stone/70 border-stoneDark text-espresso'
+                }">
+                    <div class="flex items-center justify-between w-full mb-2">
+                        <span class="font-mono text-[10px] uppercase px-2 py-0.5 rounded ${
+                            s.done ? 'bg-sage text-ivory' : 'bg-stoneDark/70 text-slateWarm'
+                        }">${s.step} • ${s.type}</span>
+                        <span class="font-mono text-[11px] text-slateWarm">${s.duration}</span>
+                    </div>
+                    <div class="font-medium text-xs leading-snug pr-4">${s.name}</div>
+                    <div class="mt-2.5 flex items-center justify-between">
+                        <span class="text-[11px] font-mono ${s.done ? 'text-sage font-semibold' : 'text-slateWarm'}">
+                            ${s.done ? '✓ Verified' : '○ Pending'}
+                        </span>
+                        ${idx < steps.length - 1 ? '<i class="ph-bold ph-arrow-right text-slateWarm/50 text-xs hidden lg:inline"></i>' : ''}
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        function toggleFlowStep(stepId) {
+            const list = state.flowRoutines[state.activeFlowRoutine];
+            const item = list.find(s => s.id === stepId);
+            if (item) {
+                item.done = !item.done;
+                renderFlowSteps();
+                showToast(`Flow Step "${item.name}" marked ${item.done ? 'complete' : 'pending'}`);
+            }
+        }
+
+        function renderHabitCheckSheet() {
+            const tbody = document.getElementById('habit-checksheet-body');
+            let totalCells = 0;
+            let completedCells = 0;
+
+            tbody.innerHTML = state.habits.map(h => {
+                const doneCount = h.days.filter(d => d === 1).length;
+                totalCells += h.days.length;
+                completedCells += doneCount;
+                const yieldPct = Math.round((doneCount / h.days.length) * 100);
+
+                const dayButtons = h.days.map((val, dIdx) => {
+                    let btnClass = 'bg-sage text-ivory border-sage';
+                    let icon = '<i class="ph-bold ph-check text-xs"></i>';
+                    if (val === 0) {
+                        btnClass = 'bg-terracottaLight text-terracotta border-terracotta/50';
+                        icon = '<i class="ph-bold ph-x text-xs"></i>';
+                    }
+                    return `
+                        <td class="py-2.5 px-1 text-center">
+                            <button onclick="toggleHabitCell('${h.id}', ${dIdx})"
+                                class="w-7 h-7 rounded-lg border ${btnClass} inline-flex items-center justify-center transition transform active:scale-90"
+                                title="Click to toggle Completed vs. Slip">
+                                ${icon}
+                            </button>
+                        </td>
+                    `;
+                }).join('');
+
+                return `
+                    <tr class="hover:bg-stone/40 transition">
+                        <td class="py-3 pr-3">
+                            <div class="font-medium text-xs text-espresso">${h.name}</div>
+                            <div class="font-mono text-[10px] text-slateWarm">Spec: ${h.target}</div>
+                        </td>
+                        ${dayButtons}
+                        <td class="py-3 pl-2 text-right font-mono text-xs font-semibold ${yieldPct >= 85 ? 'text-sage' : 'text-terracotta'}">
+                            ${yieldPct}%
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Update RTY & Process Sigma Score
+            const rty = ((completedCells / totalCells) * 100).toFixed(1);
+            // Approximate Process Sigma from Yield for personal habit display
+            const defectRate = 1 - (completedCells / totalCells);
+            const sigmaVal = Math.max(2.5, Math.min(6.0, (4.8 - defectRate * 4.2))).toFixed(1);
+
+            document.getElementById('kpi-rty').textContent = `${rty}%`;
+            document.getElementById('sidebar-rty').textContent = `${rty}%`;
+            document.getElementById('kpi-sigma').textContent = `${sigmaVal}σ`;
+            document.getElementById('sidebar-sigma-badge').textContent = `${sigmaVal}σ`;
+        }
+
+        function toggleHabitCell(habitId, dayIndex) {
+            const habit = state.habits.find(h => h.id === habitId);
+            if (!habit) return;
+            habit.days[dayIndex] = habit.days[dayIndex] === 1 ? 0 : 1;
+            renderHabitCheckSheet();
+
+            if (habit.days[dayIndex] === 0) {
+                // Update diagnostic banner with empathetic prompt
+                document.getElementById('banner-title').textContent = `Slip logged on "${habit.name}". Let's inspect the system, not blame willpower.`;
+                document.getElementById('banner-subtitle').textContent = `Tally the friction trigger on the right or run a 60-second Fishbone Root-Cause Diagnosis.`;
+                showToast(`Logged slip on "${habit.name}" — Check Sheet updated`);
+            } else {
+                showToast(`Habit verified — Weekly Yield recalculated`);
+            }
+        }
+
+        // Render authentic |||| Five-Bar Gate Tallies
+        function formatTallyMarks(count) {
+            const fullGroups = Math.floor(count / 5);
+            const remainder = count % 5;
+            let html = '';
+            for (let i = 0; i < fullGroups; i++) {
+                html += `<span class="tally-group struck">||||</span>`;
+            }
+            if (remainder > 0) {
+                html += `<span class="tally-group">${'|'.repeat(remainder)}</span>`;
+            }
+            if (count === 0) {
+                html = `<span class="font-mono text-xs text-slateWarm/50">—</span>`;
+            }
+            return html;
+        }
+
+        function renderFrictionTallies() {
+            // Sort descending by weekCount
+            state.frictionTriggers.sort((a, b) => b.weekCount - a.weekCount);
+            const totalTallies = state.frictionTriggers.reduce((sum, f) => sum + f.weekCount, 0);
+            document.getElementById('sidebar-defect-count').textContent = `${totalTallies} tallies`;
+
+            const container = document.getElementById('friction-tally-list');
+            container.innerHTML = state.frictionTriggers.map(f => `
+                <div class="p-3 rounded-xl bg-paper border border-stoneDark flex items-center justify-between gap-2">
+                    <div class="min-w-0">
+                        <div class="text-xs font-semibold text-espresso truncate">${f.name}</div>
+                        <div class="mt-1 flex items-center flex-wrap">
+                            ${formatTallyMarks(f.weekCount)}
+                            <span class="font-mono text-[11px] text-slateWarm ml-1">(${f.weekCount})</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="adjustFrictionTally('${f.id}', -1)" class="w-7 h-7 rounded-lg border border-stoneDark bg-ivory hover:bg-stone text-slateWarm text-xs font-mono flex items-center justify-center transition" title="Remove 1 tally">-</button>
+                        <button onclick="adjustFrictionTally('${f.id}', 1)" class="px-2.5 h-7 rounded-lg bg-terracottaLight hover:bg-terracotta hover:text-ivory text-terracotta border border-terracotta/30 text-xs font-mono font-semibold flex items-center gap-1 transition" title="Add 1 tally">
+                            +1 Tally
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update banner with top trigger percentage
+            if (state.frictionTriggers.length > 0 && totalTallies > 0) {
+                const top = state.frictionTriggers[0];
+                const pct = Math.round((top.weekCount / totalTallies) * 100);
+                document.getElementById('banner-title').textContent = `"${top.name}" accounts for ${pct}% of your habit variation this week.`;
+            }
+        }
+
+        function adjustFrictionTally(id, delta) {
+            const item = state.frictionTriggers.find(f => f.id === id);
+            if (!item) return;
+            item.weekCount = Math.max(0, item.weekCount + delta);
+            item.monthCount = Math.max(item.weekCount, item.monthCount + delta);
+            renderFrictionTallies();
+            if (state.activeTab === 'rootcause') renderParetoChart();
+            if (delta > 0) {
+                showToast(`+1 Tally added to "${item.name}" (Pareto 80/20 updated)`);
+            }
+        }
+
+        function addCustomFrictionCategory(e) {
+            e.preventDefault();
+            const input = document.getElementById('new-friction-input');
+            const name = input.value.trim();
+            if (!name) return;
+            state.frictionTriggers.push({
+                id: 'f' + Date.now(),
+                name,
+                weekCount: 1,
+                monthCount: 1,
+                linkedBone: 'workout'
+            });
+            input.value = '';
+            renderFrictionTallies();
+            showToast(`Added blocker "${name}" to Check Sheet & Pareto Chart`);
+        }
+
+        function jumpToFishboneFromBanner() {
+            const top = state.frictionTriggers[0];
+            if (top && top.linkedBone) {
+                state.activeFishboneProblem = top.linkedBone;
+                document.getElementById('fishbone-problem-select').value = top.linkedBone;
+            }
+            switchTab('rootcause');
+        }
+
+        // ==========================================
+        // 4. TAB 2: PARETO 80/20 & FISHBONE STUDIO
+        // ==========================================
+        function setParetoTimeframe(tf) {
+            state.paretoTimeframe = tf;
+            const wBtn = document.getElementById('pareto-tf-week');
+            const mBtn = document.getElementById('pareto-tf-month');
+            if (tf === 'week') {
+                wBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition';
+                mBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition';
+            } else {
+                mBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition';
+                wBtn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition';
+            }
+            renderParetoChart();
+        }
+
+        function renderParetoChart() {
+            const svg = document.getElementById('pareto-svg');
+            if (!svg) return;
+
+            const key = state.paretoTimeframe === 'week' ? 'weekCount' : 'monthCount';
+            const sorted = [...state.frictionTriggers].sort((a, b) => b[key] - a[key]);
+            const total = sorted.reduce((acc, item) => acc + item[key], 0) || 1;
+            const maxVal = Math.max(...sorted.map(i => i[key]), 5);
+
+            const chartLeft = 50;
+            const chartRight = 700;
+            const chartTop = 25;
+            const chartBottom = 205;
+            const chartWidth = chartRight - chartLeft;
+            const chartHeight = chartBottom - chartTop;
+
+            let cumulative = 0;
+            let vitalCount = 0;
+            let vitalPct = 0;
+
+            const points = [];
+            const barsHtml = [];
+            const labelsHtml = [];
+
+            const slotWidth = chartWidth / sorted.length;
+            const barWidth = Math.min(68, slotWidth * 0.56);
+
+            sorted.forEach((item, idx) => {
+                const val = item[key];
+                const prevCumPct = (cumulative / total) * 100;
+                cumulative += val;
+                const cumPct = (cumulative / total) * 100;
+
+                // Determine if in the Vital Few (starts below 80% threshold)
+                const isVital = prevCumPct < 79.9 && val > 0;
+                if (isVital) {
+                    vitalCount++;
+                    vitalPct = Math.round(cumPct);
+                }
+
+                const xCenter = chartLeft + idx * slotWidth + slotWidth / 2;
+                const xBar = xCenter - barWidth / 2;
+                const barH = (val / maxVal) * chartHeight;
+                const yBar = chartBottom - barH;
+
+                const yCum = chartBottom - (cumPct / 100) * chartHeight;
+                points.push({ x: xCenter, y: yCum, pct: Math.round(cumPct) });
+
+                const fill = isVital ? '#C85A32' : '#D6D1C4';
+                barsHtml.push(`
+                    <g class="cursor-pointer" onclick="adjustFrictionTally('${item.id}', 1)">
+                        <rect x="${xBar}" y="${yBar}" width="${barWidth}" height="${barH}" rx="6" fill="${fill}" class="transition-all duration-300 hover:opacity-85"/>
+                        <text x="${xCenter}" y="${yBar - 7}" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="#1C1B19">${val}</text>
+                    </g>
+                `);
+
+                // Truncate label nicely
+                const shortName = item.name.length > 18 ? item.name.slice(0, 17) + '…' : item.name;
+                labelsHtml.push(`
+                    <g class="cursor-pointer" onclick="adjustFrictionTally('${item.id}', 1)">
+                        <text x="${xCenter}" y="${chartBottom + 20}" text-anchor="middle" font-family="Plus Jakarta Sans" font-size="11" font-weight="500" fill="#1C1B19">${shortName}</text>
+                        <text x="${xCenter}" y="${chartBottom + 36}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#C85A32">+1 tally</text>
+                    </g>
+                `);
+            });
+
+            // 80% threshold line Y
+            const y80 = chartBottom - 0.8 * chartHeight;
+
+            // Polyline for cumulative curve
+            const polylinePoints = points.map(p => `${p.x},${p.y}`).join(' ');
+            const dotsHtml = points.map(p => `
+                <circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#1C1B19" stroke="#FFFFFF" stroke-width="2"/>
+                <text x="${p.x}" y="${p.y - 10}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#6E6A63">${p.pct}%</text>
+            `).join('');
+
+            // Update insight pill
+            document.getElementById('pareto-vital-text').textContent =
+                `Top ${vitalCount} trigger${vitalCount > 1 ? 's' : ''} account for ${vitalPct}% of all habit slips. Focus your energy here.`;
+
+            svg.innerHTML = `
+                <!-- Grid Lines -->
+                <line x1="${chartLeft}" y1="${chartBottom}" x2="${chartRight}" y2="${chartBottom}" stroke="#E6E2D8" stroke-width="1.5"/>
+                <line x1="${chartLeft}" y1="${chartTop}" x2="${chartRight}" y2="${chartTop}" stroke="#F2EFE9" stroke-width="1"/>
+                
+                <!-- 80% Pareto Cutoff Line -->
+                <line x1="${chartLeft}" y1="${y80}" x2="${chartRight}" y2="${y80}" stroke="#D99B26" stroke-width="1.5" stroke-dasharray="5 4"/>
+                <rect x="${chartRight - 102}" y="${y80 - 18}" width="98" height="16" rx="4" fill="#FDF6E7"/>
+                <text x="${chartRight - 53}" y="${y80 - 7}" text-anchor="middle" font-family="JetBrains Mono" font-size="9.5" font-weight="600" fill="#D99B26">80% CUTOFF RULE</text>
+
+                <!-- Left Axis (Frequency) -->
+                <text x="${chartLeft - 10}" y="${chartTop + 4}" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">${maxVal}</text>
+                <text x="${chartLeft - 10}" y="${chartBottom}" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">0</text>
+                <text x="14" y="${(chartTop + chartBottom) / 2}" text-anchor="middle" transform="rotate(-90 14 ${(chartTop + chartBottom) / 2})" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">SLIP COUNT</text>
+
+                <!-- Right Axis (Cumulative %) -->
+                <text x="${chartRight + 10}" y="${chartTop + 4}" text-anchor="start" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">100%</text>
+                <text x="${chartRight + 10}" y="${y80 + 3}" text-anchor="start" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#D99B26">80%</text>
+                <text x="${chartRight + 10}" y="${chartBottom}" text-anchor="start" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">0%</text>
+
+                <!-- Bars -->
+                ${barsHtml.join('')}
+
+                <!-- Cumulative Curve -->
+                <polyline fill="none" stroke="#1C1B19" stroke-width="2.25" points="${polylinePoints}"/>
+                ${dotsHtml}
+
+                <!-- X Axis Labels -->
+                ${labelsHtml.join('')}
+            `;
+        }
+
+        // Fishbone Diagram Logic
+        function switchFishboneProblem(problemKey) {
+            state.activeFishboneProblem = problemKey;
+            renderFishbone();
+        }
+
+        function renderFishbone() {
+            const problem = state.fishboneData[state.activeFishboneProblem];
+            if (!problem) return;
+
+            document.getElementById('fishbone-head-label').textContent = problem.title;
+
+            const categories = ['environment', 'energy', 'routine', 'mindset'];
+            let activeNodeObj = null;
+
+            categories.forEach(cat => {
+                const container = document.getElementById(`bone-list-${cat}`);
+                const items = problem[cat] || [];
+                container.innerHTML = items.map(node => {
+                    const isPrimary = node.id === problem.activeCauseId;
+                    if (isPrimary) activeNodeObj = node;
+                    return `
+                        <button onclick="selectPrimaryBoneCause('${node.id}')"
+                            class="w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between gap-2 transition border ${
+                                isPrimary
+                                    ? 'bg-terracottaLight border-terracotta text-espresso font-semibold shadow-2xs'
+                                    : 'bg-paper hover:bg-stone/70 border-stoneDark/80 text-espresso'
+                            }">
+                            <span class="leading-snug">${node.text}</span>
+                            <span class="font-mono text-[10px] px-1.5 py-0.5 rounded shrink-0 ${
+                                isPrimary ? 'bg-terracotta text-ivory' : 'text-slateWarm'
+                            }">${isPrimary ? 'PRIMARY' : 'Select'}</span>
+                        </button>
+                    `;
+                }).join('');
+            });
+
+            if (activeNodeObj) {
+                document.getElementById('fishbone-active-root').textContent = `Primary Root Cause: ${activeNodeObj.text}`;
+                document.getElementById('fishbone-active-solution').textContent = `Countermeasure: ${activeNodeObj.fix}`;
+            }
+        }
+
+        function selectPrimaryBoneCause(causeId) {
+            const problem = state.fishboneData[state.activeFishboneProblem];
+            problem.activeCauseId = causeId;
+            renderFishbone();
+            showToast('Primary root cause & Poka-Yoke countermeasure updated');
+        }
+
+        function promptAddBoneCause(category) {
+            document.getElementById('bone-category-hidden').value = category;
+            const titles = {
+                environment: 'Add Environment & Space Cause',
+                energy: 'Add Energy & Physiology Cause',
+                routine: 'Add Routine & Prep Cause',
+                mindset: 'Add Mindset & Digital Cause'
+            };
+            document.getElementById('bone-modal-title').textContent = titles[category];
+            document.getElementById('bone-modal').classList.remove('hidden');
+            document.getElementById('bone-modal').classList.add('flex');
+        }
+
+        function closeBoneModal() {
+            document.getElementById('bone-modal').classList.add('hidden');
+            document.getElementById('bone-modal').classList.remove('flex');
+        }
+
+        function submitNewBoneCause(e) {
+            e.preventDefault();
+            const cat = document.getElementById('bone-category-hidden').value;
+            const text = document.getElementById('bone-cause-input').value.trim();
+            const fix = document.getElementById('bone-fix-input').value.trim();
+            if (!text || !fix) return;
+
+            const problem = state.fishboneData[state.activeFishboneProblem];
+            const newId = 'c' + Date.now();
+            problem[cat].push({ id: newId, text, fix });
+            problem.activeCauseId = newId;
+
+            document.getElementById('bone-cause-input').value = '';
+            document.getElementById('bone-fix-input').value = '';
+            closeBoneModal();
+            renderFishbone();
+            showToast('New root cause & countermeasure attached to Fishbone');
+        }
+
+        // ==========================================
+        // 5. TAB 3: SPC CONTROL CHART & SCATTER LAB
+        // ==========================================
+        function selectSpcMetric(metricKey) {
+            state.activeSpcMetric = metricKey;
+            ['sleep', 'focus', 'screen'].forEach(k => {
+                const btn = document.getElementById(`spc-btn-${k}`);
+                if (k === metricKey) {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium bg-ivory text-espresso shadow-sm transition';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-lg text-xs font-medium text-slateWarm hover:text-espresso transition';
+                }
+            });
+
+            const m = state.spcMetrics[metricKey];
+            const slider = document.getElementById('spc-spec-slider');
+            slider.min = m.sliderMin;
+            slider.max = m.sliderMax;
+            slider.step = m.sliderStep;
+            slider.value = m.specLimit;
+
+            renderSpcChart();
+        }
+
+        function updateSpcSpecLimit(val) {
+            const m = state.spcMetrics[state.activeSpcMetric];
+            m.specLimit = parseFloat(val);
+            renderSpcChart();
+        }
+
+        function renderSpcChart() {
+            const svg = document.getElementById('spc-svg');
+            if (!svg) return;
+
+            const m = state.spcMetrics[state.activeSpcMetric];
+            const pts = m.data;
+            const vals = pts.map(p => p.val);
+
+            // Calculate Mean and Standard Deviation (excluding extreme outlier for clean natural control bands or standard sample SD)
+            const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+            const variance = vals.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / vals.length;
+            const sd = Math.sqrt(variance);
+
+            // Control limits at +/- 1.85 SD so realistic personal special cause spikes stand out clearly
+            const ucl = mean + 1.85 * sd;
+            const lcl = Math.max(0, mean - 1.85 * sd);
+
+            document.getElementById('spc-chart-title').textContent = m.name;
+            document.getElementById('spc-ucl-val').textContent = `${ucl.toFixed(1)} ${m.unit}`;
+            document.getElementById('spc-mean-val').textContent = `${mean.toFixed(1)} ${m.unit}`;
+            document.getElementById('spc-lcl-val').textContent = `${lcl.toFixed(1)} ${m.unit}`;
+            document.getElementById('spc-spec-label').textContent = `${m.specLimit} ${m.unit} (${m.specDirection})`;
+
+            const minVal = Math.min(...vals, lcl, m.specLimit) * 0.85;
+            const maxVal = Math.max(...vals, ucl, m.specLimit) * 1.1;
+
+            const left = 52;
+            const right = 695;
+            const top = 22;
+            const bottom = 220;
+            const width = right - left;
+            const height = bottom - top;
+
+            const mapY = (v) => bottom - ((v - minVal) / (maxVal - minVal)) * height;
+            const yUcl = mapY(ucl);
+            const yMean = mapY(mean);
+            const yLcl = mapY(lcl);
+            const ySpec = mapY(m.specLimit);
+
+            const stepX = width / Math.max(1, pts.length - 1);
+
+            const coords = pts.map((p, i) => ({
+                x: left + i * stepX,
+                y: mapY(p.val),
+                val: p.val,
+                day: p.day,
+                note: p.note,
+                isOut: p.val > ucl || p.val < lcl
+            }));
+
+            const linePath = coords.map(c => `${c.x},${c.y}`).join(' ');
+
+            const nodesHtml = coords.map(c => {
+                if (c.isOut) {
+                    return `
+                        <g class="cursor-pointer">
+                            <circle cx="${c.x}" cy="${c.y}" r="11" fill="rgba(200, 90, 50, 0.25)" class="special-cause-pulse"/>
+                            <circle cx="${c.x}" cy="${c.y}" r="5.5" fill="#C85A32" stroke="#FFFFFF" stroke-width="2"/>
+                            <text x="${c.x}" y="${c.y - 12}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#C85A32">${c.val} (${c.note.replace('Special Cause: ', '')})</text>
+                        </g>
+                    `;
+                }
+                return `
+                    <g>
+                        <circle cx="${c.x}" cy="${c.y}" r="4.5" fill="#2D5A4C" stroke="#FFFFFF" stroke-width="1.75"/>
+                        <text x="${c.x}" y="${c.y - 9}" text-anchor="middle" font-family="JetBrains Mono" font-size="9.5" fill="#6E6A63">${c.val}</text>
+                    </g>
+                `;
+            }).join('');
+
+            const xLabels = coords.map(c => `
+                <text x="${c.x}" y="${bottom + 20}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#6E6A63">${c.day}</text>
+            `).join('');
+
+            svg.innerHTML = `
+                <!-- Shaded In-Control Stability Zone (Between LCL and UCL) -->
+                <rect x="${left}" y="${yUcl}" width="${width}" height="${Math.max(0, yLcl - yUcl)}" fill="rgba(45, 90, 76, 0.08)" rx="4"/>
+
+                <!-- UCL Line -->
+                <line x1="${left}" y1="${yUcl}" x2="${right}" y2="${yUcl}" stroke="#6E6A63" stroke-width="1.25" stroke-dasharray="5 4"/>
+                <text x="${right + 8}" y="${yUcl + 4}" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#6E6A63">UCL ${ucl.toFixed(1)}</text>
+
+                <!-- Mean Center Line -->
+                <line x1="${left}" y1="${yMean}" x2="${right}" y2="${yMean}" stroke="#2D5A4C" stroke-width="1.5"/>
+                <text x="${right + 8}" y="${yMean + 4}" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#2D5A4C">X̄ ${mean.toFixed(1)}</text>
+
+                <!-- LCL Line -->
+                <line x1="${left}" y1="${yLcl}" x2="${right}" y2="${yLcl}" stroke="#6E6A63" stroke-width="1.25" stroke-dasharray="5 4"/>
+                <text x="${right + 8}" y="${yLcl + 4}" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="#6E6A63">LCL ${lcl.toFixed(1)}</text>
+
+                <!-- Customer Specification Limit Line -->
+                <line x1="${left}" y1="${ySpec}" x2="${right}" y2="${ySpec}" stroke="#D99B26" stroke-width="1.75"/>
+                <rect x="${left + 8}" y="${ySpec - 15}" width="118" height="15" rx="3" fill="#FDF6E7"/>
+                <text x="${left + 67}" y="${ySpec - 4}" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#D99B26">SPEC LIMIT: ${m.specLimit} ${m.unit}</text>
+
+                <!-- Process Data Polyline -->
+                <polyline fill="none" stroke="#1C1B19" stroke-width="2" points="${linePath}"/>
+
+                <!-- Data Points -->
+                ${nodesHtml}
+
+                <!-- X Axis -->
+                <line x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}" stroke="#E6E2D8" stroke-width="1.5"/>
+                ${xLabels}
+            `;
+        }
+
+        function logNewSpcPoint(e) {
+            e.preventDefault();
+            const valInput = document.getElementById('spc-new-val');
+            const noteInput = document.getElementById('spc-new-note');
+            const val = parseFloat(valInput.value);
+            if (isNaN(val)) return;
+
+            const m = state.spcMetrics[state.activeSpcMetric];
+            const nextDayNum = m.data.length + 1;
+            m.data.push({
+                day: `D${nextDayNum}`,
+                val,
+                note: noteInput.value.trim() || 'Logged reading'
+            });
+            if (m.data.length > 16) m.data.shift();
+
+            valInput.value = '';
+            noteInput.value = '';
+            renderSpcChart();
+            showToast(`Plotted ${val} ${m.unit} on SPC Control Chart & recalculated UCL/LCL`);
+        }
+
+        // Scatter Diagram Logic
+        function renderScatterChart() {
+            const svg = document.getElementById('scatter-svg');
+            if (!svg) return;
+
+            const pair = document.getElementById('scatter-pair-select').value;
+            const datasets = {
+                sleep_focus: {
+                    xLabel: 'Restorative Sleep (Hours)',
+                    yLabel: 'Deep Focus Score (0-100)',
+                    rText: 'r = +0.86 (Strong Positive)',
+                    rClass: 'bg-sageLight text-sage border-sage/20',
+                    title: 'Every +1 hr of sleep above 6.5h yields +24 mins of unbroken focus.',
+                    desc: 'Instead of forcing longer desk hours when exhausted, your scatter data proves that protecting your 10:30 PM wind-down is the highest-leverage upstream variable.',
+                    pts: [
+                        [5.5, 48], [6.0, 55], [6.2, 60], [6.5, 68], [6.8, 72], [7.0, 78],
+                        [7.2, 82], [7.4, 85], [7.5, 88], [7.6, 84], [7.8, 91], [8.0, 94], [8.2, 95]
+                    ]
+                },
+                caffeine_sleep: {
+                    xLabel: 'Afternoon Caffeine After 2 PM (mg)',
+                    yLabel: 'Deep Sleep Duration (Hours)',
+                    rText: 'r = -0.82 (Strong Negative)',
+                    rClass: 'bg-terracottaLight text-terracotta border-terracotta/20',
+                    title: 'Caffeine after 2:00 PM linearly erodes restorative sleep.',
+                    desc: 'Notice the downward slope: days with >100mg afternoon caffeine consistently pull sleep below your 7.0h specification limit.',
+                    pts: [
+                        [0, 8.1], [0, 7.8], [40, 7.6], [60, 7.4], [80, 7.1], [100, 6.8],
+                        [120, 6.5], [150, 6.2], [180, 5.9], [200, 5.5], [220, 5.3]
+                    ]
+                },
+                steps_mood: {
+                    xLabel: 'Morning Outdoor Walk (Minutes)',
+                    yLabel: 'Evening Calmness Rating (1-10)',
+                    rText: 'r = +0.79 (Positive)',
+                    rClass: 'bg-sageLight text-sage border-sage/20',
+                    title: '15+ mins of morning sunlight anchors evening circadian calm.',
+                    desc: 'Days starting with an outdoor walk before checking email cluster tightly in the 8–9.5 evening calmness zone.',
+                    pts: [
+                        [0, 4.5], [5, 5.2], [10, 6.5], [12, 7.0], [15, 7.8], [18, 8.2],
+                        [20, 8.5], [22, 8.4], [25, 9.0], [30, 9.2]
+                    ]
+                }
+            };
+
+            const cfg = datasets[pair];
+            document.getElementById('scatter-r-badge').textContent = cfg.rText;
+            document.getElementById('scatter-r-badge').className = `font-mono text-xs font-semibold px-3 py-2 rounded-xl border ${cfg.rClass}`;
+            document.getElementById('scatter-takeaway-title').textContent = cfg.title;
+            document.getElementById('scatter-takeaway-desc').textContent = cfg.desc;
+
+            const xs = cfg.pts.map(p => p[0]);
+            const ys = cfg.pts.map(p => p[1]);
+            const minX = Math.min(...xs);
+            const maxX = Math.max(...xs);
+            const minY = Math.min(...ys) * 0.9;
+            const maxY = Math.max(...ys) * 1.05;
+
+            const left = 48;
+            const right = 510;
+            const top = 20;
+            const bottom = 195;
+            const w = right - left;
+            const h = bottom - top;
+
+            const mapX = (x) => left + ((x - minX) / (maxX - minX || 1)) * w;
+            const mapY = (y) => bottom - ((y - minY) / (maxY - minY || 1)) * h;
+
+            // Trendline endpoints (first and last sorted X)
+            const x1 = mapX(xs[0]);
+            const y1 = mapY(ys[0]);
+            const x2 = mapX(xs[xs.length - 1]);
+            const y2 = mapY(ys[ys.length - 1]);
+
+            const dots = cfg.pts.map(p => `
+                <circle cx="${mapX(p[0])}" cy="${mapY(p[1])}" r="5" fill="#C85A32" fill-opacity="0.8" stroke="#FFFFFF" stroke-width="1.5"/>
+            `).join('');
+
+            svg.innerHTML = `
+                <line x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}" stroke="#E6E2D8" stroke-width="1.5"/>
+                <line x1="${left}" y1="${top}" x2="${left}" y2="${bottom}" stroke="#E6E2D8" stroke-width="1.5"/>
+
+                <!-- Linear Regression Trendline -->
+                <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#2D5A4C" stroke-width="2" stroke-dasharray="6 4"/>
+
+                ${dots}
+
+                <!-- Axis Labels -->
+                <text x="${(left + right) / 2}" y="${bottom + 32}" text-anchor="middle" font-family="JetBrains Mono" font-size="10.5" fill="#6E6A63">${cfg.xLabel}</text>
+                <text x="14" y="${(top + bottom) / 2}" text-anchor="middle" transform="rotate(-90 14 ${(top + bottom) / 2})" font-family="JetBrains Mono" font-size="10.5" fill="#6E6A63">${cfg.yLabel}</text>
+            `;
+        }
+
+        // ==========================================
+        // 6. TAB 4: PDPC PRE-MORTEM & ARROW DIAGRAM
+        // ==========================================
+        function renderPdpcTree() {
+            const container = document.getElementById('pdpc-columns-grid');
+            if (!container) return;
+
+            container.innerHTML = state.pdpcPillars.map((pillar, pIdx) => `
+                <div class="bg-ivory rounded-xl border border-stoneDark p-4 flex flex-col justify-between space-y-4">
+                    <div>
+                        <!-- Level 2: Plan Pillar -->
+                        <div class="bg-stone/80 p-3 rounded-lg border border-stoneDark mb-4">
+                            <div class="font-mono text-[10px] uppercase text-slateWarm">Level 2: Plan Pillar 0${pIdx + 1}</div>
+                            <div class="font-semibold text-sm text-espresso mt-0.5">${pillar.title}</div>
+                            <div class="text-[11px] text-slateWarm">${pillar.subtitle}</div>
+                        </div>
+
+                        <!-- Level 3 & 4 Branches -->
+                        <div class="space-y-3">
+                            ${pillar.Scenarios.map(sc => `
+                                <div class="rounded-xl border border-stoneDark overflow-hidden">
+                                    <!-- Level 3: What Could Go Wrong -->
+                                    <div class="bg-ochreLight p-3 border-b border-ochre/20">
+                                        <div class="flex items-center gap-1.5 font-mono text-[10px] uppercase text-ochre font-semibold">
+                                            <i class="ph-fill ph-warning"></i> Obstacle / Risk
+                                        </div>
+                                        <div class="text-xs font-medium text-espresso mt-0.5">${sc.risk}</div>
+                                    </div>
+                                    <!-- Level 4: Preventive Countermeasure -->
+                                    <div class="p-3 ${sc.active ? 'bg-sageLight/70' : 'bg-paper'}">
+                                        <div class="flex items-center justify-between">
+                                            <span class="font-mono text-[10px] uppercase text-sage font-semibold">Countermeasure SOP</span>
+                                            <button onclick="togglePdpcCounter('${sc.id}')" class="font-mono text-[10px] px-2 py-0.5 rounded border ${
+                                                sc.active
+                                                    ? 'bg-sage text-ivory border-sage'
+                                                    : 'bg-ivory text-slateWarm border-stoneDark'
+                                            }">
+                                                ${sc.active ? '✓ Active SOP' : 'Activate'}
+                                            </button>
+                                        </div>
+                                        <div class="text-xs text-espresso mt-1">${sc.counter}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function togglePdpcCounter(scId) {
+            state.pdpcPillars.forEach(p => {
+                const item = p.Scenarios.find(s => s.id === scId);
+                if (item) item.active = !item.active;
+            });
+            renderPdpcTree();
+            showToast('PDPC Countermeasure SOP status updated');
+        }
+
+        function openAddPdpcModal() {
+            document.getElementById('pdpc-modal').classList.remove('hidden');
+            document.getElementById('pdpc-modal').classList.add('flex');
+        }
+
+        function closeAddPdpcModal() {
+            document.getElementById('pdpc-modal').classList.add('hidden');
+            document.getElementById('pdpc-modal').classList.remove('flex');
+        }
+
+        function submitNewPdpcBranch(e) {
+            e.preventDefault();
+            const pillarIdx = parseInt(document.getElementById('pdpc-pillar-select').value, 10);
+            const risk = document.getElementById('pdpc-risk-input').value.trim();
+            const counter = document.getElementById('pdpc-counter-input').value.trim();
+            if (!risk || !counter) return;
+
+            state.pdpcPillars[pillarIdx].Scenarios.push({
+                id: 'p' + Date.now(),
+                risk,
+                counter,
+                active: true
+            });
+
+            document.getElementById('pdpc-risk-input').value = '';
+            document.getElementById('pdpc-counter-input').value = '';
+            closeAddPdpcModal();
+            renderPdpcTree();
+            showToast('New obstacle & preventive countermeasure added to PDPC');
+        }
+
+        // Arrow Diagram Logic
+        function renderArrowDiagram() {
+            const container = document.getElementById('arrow-diagram-container');
+            if (!container) return;
+
+            const doneCount = state.arrowNodes.filter(n => n.done).length;
+            document.getElementById('arrow-completed-count').textContent = `${doneCount}/${state.arrowNodes.length}`;
+
+            container.innerHTML = state.arrowNodes.map((n, idx) => {
+                const isCritical = n.path === 'Critical Path';
+                return `
+                    <button onclick="toggleArrowNode('${n.id}')" class="text-left p-4 rounded-xl border transition-all relative flex flex-col justify-between ${
+                        n.done
+                            ? 'bg-sageLight/70 border-sage/40'
+                            : 'bg-paper hover:bg-stone/70 border-stoneDark'
+                    }">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="w-7 h-7 rounded-full font-mono text-xs font-semibold flex items-center justify-center ${
+                                n.done ? 'bg-sage text-ivory' : 'bg-espresso text-ivory'
+                            }">${n.code}</span>
+                            <span class="font-mono text-[10px] px-2 py-0.5 rounded ${
+                                isCritical ? 'bg-terracottaLight text-terracotta font-semibold' : 'bg-stone text-slateWarm'
+                            }">${n.path}</span>
+                        </div>
+                        <div class="font-semibold text-xs text-espresso leading-snug my-1">${n.title}</div>
+                        <div class="mt-2 pt-2 border-t border-stoneDark/60 flex items-center justify-between font-mono text-[11px]">
+                            <span class="text-slateWarm">${n.duration}</span>
+                            <span class="${n.done ? 'text-sage font-semibold' : 'text-slateWarm'}">${n.done ? '✓ Done' : 'Pending'}</span>
+                        </div>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleArrowNode(nodeId) {
+            const node = state.arrowNodes.find(n => n.id === nodeId);
+            if (node) {
+                node.done = !node.done;
+                renderArrowDiagram();
+                showToast(`Milestone Node ${node.code} ("${node.title}") updated`);
+            }
+        }
+
+        // ==========================================
+        // 7. MODALS & TOAST HELPERS
+        // ==========================================
+        function openTheoryModal() {
+            document.getElementById('theory-modal').classList.remove('hidden');
+            document.getElementById('theory-modal').classList.add('flex');
+        }
+        function closeTheoryModal() {
+            document.getElementById('theory-modal').classList.add('hidden');
+            document.getElementById('theory-modal').classList.remove('flex');
+        }
+
+        function openQuickSlipModal() {
+            const list = document.getElementById('modal-quick-tally-buttons');
+            list.innerHTML = state.frictionTriggers.map(f => `
+                <button onclick="adjustFrictionTally('${f.id}', 1); closeQuickSlipModal();"
+                    class="w-full p-3 rounded-xl bg-paper hover:bg-terracottaLight border border-stoneDark hover:border-terracotta/40 flex items-center justify-between text-left transition">
+                    <span class="text-xs font-semibold text-espresso">${f.name}</span>
+                    <span class="font-mono text-xs text-terracotta font-semibold">+1 Tally (Now ${f.weekCount})</span>
+                </button>
+            `).join('');
+            document.getElementById('quick-slip-modal').classList.remove('hidden');
+            document.getElementById('quick-slip-modal').classList.add('flex');
+        }
+        function closeQuickSlipModal() {
+            document.getElementById('quick-slip-modal').classList.add('hidden');
+            document.getElementById('quick-slip-modal').classList.remove('flex');
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const box = document.getElementById('toast-box');
+            document.getElementById('toast-text').textContent = message;
+            box.classList.remove('opacity-0', 'translate-y-2');
+            box.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                box.classList.add('opacity-0', 'translate-y-2');
+                box.classList.remove('opacity-100', 'translate-y-0');
+            }, 2600);
+        }
+
+        // ==========================================
+        // 8. INITIALIZE ON LOAD
+        // ==========================================
+        window.onload = function() {
+            renderFlowSteps();
+            renderHabitCheckSheet();
+            renderFrictionTallies();
+            renderParetoChart();
+            renderFishbone();
+            renderSpcChart();
+            renderScatterChart();
+            renderPdpcTree();
+            renderArrowDiagram();
+        };
+    </script>
+</body>
+</html>

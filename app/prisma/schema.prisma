@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// USER (extended with auth tables in Phase 2)
+// ==========================================
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  flowRoutines     FlowRoutine[]
+  habits           Habit[]
+  frictionTriggers FrictionTrigger[]
+  fishboneProblems FishboneProblem[]
+  spcMetrics       SpcMetric[]
+  pdpcPillars      PdpcPillar[]
+  arrowNodes       ArrowNode[]
+}
+
+// ==========================================
+// WORKSPACE 1: FLOW CHART & CHECK SHEET
+// ==========================================
+enum FlowRoutineType {
+  MORNING
+  EVENING
+}
+
+model FlowRoutine {
+  id     String          @id @default(cuid())
+  userId String
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type   FlowRoutineType
+  steps  FlowStep[]
+
+  @@unique([userId, type])
+}
+
+model FlowStep {
+  id            String      @id @default(cuid())
+  flowRoutineId String
+  flowRoutine   FlowRoutine @relation(fields: [flowRoutineId], references: [id], onDelete: Cascade)
+  order         Int
+  name          String
+  duration      String
+  stepType      String // Input / Process / Gate / Output / Core CTQ / Audit / Poka-Yoke / Wind-down
+  done          Boolean     @default(false)
+}
+
+model Habit {
+  id       String      @id @default(cuid())
+  userId   String
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name     String
+  target   String
+  archived Boolean     @default(false)
+  logs     HabitLog[]
+}
+
+enum HabitStatus {
+  DONE
+  SLIP
+  PENDING
+}
+
+model HabitLog {
+  id       String      @id @default(cuid())
+  habitId  String
+  habit    Habit       @relation(fields: [habitId], references: [id], onDelete: Cascade)
+  date     DateTime    @db.Date
+  status   HabitStatus @default(PENDING)
+
+  @@unique([habitId, date])
+}
+
+model FrictionTrigger {
+  id          String          @id @default(cuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  linkedBone  String? // fishbone problem key this trigger tends to feed
+  tallies     FrictionTally[]
+}
+
+model FrictionTally {
+  id                String          @id @default(cuid())
+  frictionTriggerId String
+  frictionTrigger   FrictionTrigger @relation(fields: [frictionTriggerId], references: [id], onDelete: Cascade)
+  loggedAt          DateTime        @default(now())
+  note              String?
+}
+
+// ==========================================
+// WORKSPACE 2: ROOT-CAUSE STUDIO (FISHBONE)
+// Pareto chart is derived from FrictionTally counts, no table needed.
+// ==========================================
+model FishboneProblem {
+  id       String          @id @default(cuid())
+  userId   String
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key      String // e.g. "workout", "deepwork", "sleep"
+  title    String
+  causes   FishboneCause[]
+
+  @@unique([userId, key])
+}
+
+enum FishboneCategory {
+  ENVIRONMENT
+  ENERGY
+  ROUTINE
+  MINDSET
+}
+
+model FishboneCause {
+  id                String           @id @default(cuid())
+  fishboneProblemId String
+  fishboneProblem   FishboneProblem  @relation(fields: [fishboneProblemId], references: [id], onDelete: Cascade)
+  category          FishboneCategory
+  text              String
+  fix               String
+  isPrimary         Boolean          @default(false)
+}
+
+// ==========================================
+// WORKSPACE 3: STABILITY & CORRELATIONS (SPC)
+// Scatter diagrams are derived by pairing SpcDataPoint series, no table needed.
+// ==========================================
+enum SpecDirection {
+  MIN
+  MAX
+}
+
+model SpcMetric {
+  id            String          @id @default(cuid())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  key           String // e.g. "sleep", "focus", "screen"
+  name          String
+  unit          String
+  specLimit     Float
+  specDirection SpecDirection
+  dataPoints    SpcDataPoint[]
+
+  @@unique([userId, key])
+}
+
+model SpcDataPoint {
+  id          String    @id @default(cuid())
+  spcMetricId String
+  spcMetric   SpcMetric @relation(fields: [spcMetricId], references: [id], onDelete: Cascade)
+  date        DateTime  @db.Date
+  value       Float
+  note        String?
+
+  @@unique([spcMetricId, date])
+}
+
+// ==========================================
+// WORKSPACE 4: LIFE DESIGN & PRE-MORTEM (PDPC + ARROW)
+// ==========================================
+model PdpcPillar {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  subtitle  String
+  order     Int
+  scenarios PdpcScenario[]
+}
+
+model PdpcScenario {
+  id           String     @id @default(cuid())
+  pdpcPillarId String
+  pdpcPillar   PdpcPillar @relation(fields: [pdpcPillarId], references: [id], onDelete: Cascade)
+  risk         String
+  counter      String
+  active       Boolean    @default(true)
+}
+
+enum ArrowPathType {
+  CRITICAL_PATH
+  PARALLEL_SLACK
+}
+
+model ArrowNode {
+  id       String        @id @default(cuid())
+  userId   String
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code     String
+  order    Int
+  title    String
+  duration String
+  path     ArrowPathType
+  done     Boolean       @default(false)
+}
