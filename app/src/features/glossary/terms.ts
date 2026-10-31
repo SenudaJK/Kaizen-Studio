@@ -22,6 +22,8 @@ export type GlossaryKey =
   | "scatter"
   | "correlation"
   | "pdpc"
+  | "arrow-diagram"
+  | "critical-path"
   | "belt";
 
 export interface GlossaryEntry {
@@ -146,7 +148,19 @@ export const GLOSSARY: Record<GlossaryKey, GlossaryEntry> = {
   pdpc: {
     term: "Pre-mortem (PDPC)",
     plain: "Plan for what could go wrong before it does.",
-    detail: "List the obstacles that could derail a goal and decide your backup move for each one in advance. Coming in Life Design.",
+    detail: "List the obstacles that could derail a goal and decide your backup move for each one in advance.",
+    group: "tools",
+  },
+  "arrow-diagram": {
+    term: "Arrow diagram",
+    plain: "A goal broken into ordered milestones, so you can see what depends on what.",
+    detail: "Lay out the steps of a multi-week goal in sequence with a duration for each. It shows how long the whole thing takes and which steps can't be allowed to slip.",
+    group: "tools",
+  },
+  "critical-path": {
+    term: "Critical path",
+    plain: "The chain of steps that sets your finish date. A delay on any of them delays the goal.",
+    detail: "Some milestones can run alongside others and have slack: they can slip a few days with no effect. The critical path has none. Protect those steps first and give the rest breathing room.",
     group: "tools",
   },
 };

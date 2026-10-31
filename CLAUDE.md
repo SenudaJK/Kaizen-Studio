@@ -76,7 +76,7 @@ verified (build passes, flows tested), not just coded.
 - [ ] **Phase 5 — Workspace 3: Stability & Correlations.** SPC/control charts with UCL/LCL/mean
   computed from `SpcDataPoint` history (not hardcoded), spec-limit slider, scatter diagrams
   pairing two metrics with correlation coefficient.
-- [ ] **Phase 6 — Workspace 4: Life Design & Pre-Mortem.** PDPC pre-mortem tree (pillars → risks
+- [x] **Phase 6 — Workspace 4: Life Design & Pre-Mortem.** PDPC pre-mortem tree (pillars → risks
   → countermeasures), Arrow diagram critical-path network with slack vs. critical-path nodes.
 - [ ] **Phase 7 — Account & settings.** Profile/password change, delete-account flow, basic
   empty states and onboarding for a brand-new user (seed nothing — the prototype's demo data was

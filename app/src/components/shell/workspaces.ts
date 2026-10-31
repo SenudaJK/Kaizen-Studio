@@ -65,7 +65,7 @@ export const WORKSPACES: readonly Workspace[] = [
     context: "Prepare backup plans before obstacles appear",
     group: "new7",
     icon: TreeStructureIcon,
-    available: false,
+    available: true,
   },
 ];
 

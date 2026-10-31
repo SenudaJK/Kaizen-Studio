@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { hourIn, weekDays, startOfWeek } from "@/lib/dates";
 import { getCurrentUser, requireUserId } from "@/lib/session";
 import { getToday, getUserTimeZone } from "@/lib/timezone";
+import { GettingStarted } from "@/features/account/components/getting-started";
 import { DailyFlow } from "@/features/check-sheet/components/daily-flow";
 import { FrictionTally } from "@/features/check-sheet/components/friction-tally";
 import { HabitCheckSheet } from "@/features/check-sheet/components/habit-check-sheet";
@@ -70,6 +71,12 @@ export default async function TodayPage({ searchParams }: PageProps<"/today">) {
       />
 
       <InsightBanner top={topTrigger(friction)} summary={summary} />
+
+      <GettingStarted
+        routineSteps={routines.MORNING.steps.length + routines.EVENING.steps.length}
+        habits={currentWeekHabits.length}
+        triggers={friction.length}
+      />
 
       <DailyFlow routines={routines} initialRoutine={routineForHour(hour)} />
 

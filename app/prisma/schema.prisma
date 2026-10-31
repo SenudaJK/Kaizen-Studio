@@ -30,6 +30,7 @@ model User {
   spcMetrics       SpcMetric[]
   pdpcPillars      PdpcPillar[]
   arrowNodes       ArrowNode[]
+  lifeGoal         LifeGoal?
 }
 
 model Account {
@@ -240,6 +241,15 @@ model SpcDataPoint {
 // ==========================================
 // WORKSPACE 4: LIFE DESIGN & PRE-MORTEM (PDPC + ARROW)
 // ==========================================
+/// One row per user: the headline goal of the pre-mortem tree and of the arrow network.
+model LifeGoal {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pdpcObjective String?
+  arrowGoal     String?
+}
+
 model PdpcPillar {
   id        String         @id @default(cuid())
   userId    String
@@ -270,8 +280,8 @@ model ArrowNode {
   user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   code     String
   order    Int
-  title    String
-  duration String
-  path     ArrowPathType
+  title        String
+  durationDays Int
+  path         ArrowPathType
   done     Boolean       @default(false)
 }
