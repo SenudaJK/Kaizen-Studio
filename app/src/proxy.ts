@@ -1,12 +1,13 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { HOME_PATH } from "@/lib/routes";
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/signup");
 
   if (isAuthPage) {
-    if (isLoggedIn) return NextResponse.redirect(new URL("/", req.nextUrl));
+    if (isLoggedIn) return NextResponse.redirect(new URL(HOME_PATH, req.nextUrl));
     return NextResponse.next();
   }
 

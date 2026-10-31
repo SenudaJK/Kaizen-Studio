@@ -85,25 +85,52 @@ model FlowRoutine {
   @@unique([userId, type])
 }
 
+// What role a step plays in the routine (plain-English labels live in the app).
+enum FlowStepKind {
+  INPUT // prepare / fuel up
+  PROCESS // main action
+  GATE // checkpoint that must pass before moving on
+  OUTPUT // produces a plan or result
+  CORE_CTQ // the one step that matters most ("Critical to Quality")
+  AUDIT // review / log
+  POKA_YOKE // safeguard that makes a slip hard
+  WIND_DOWN // calm-down step
+}
+
 model FlowStep {
-  id            String      @id @default(cuid())
+  id            String       @id @default(cuid())
   flowRoutineId String
-  flowRoutine   FlowRoutine @relation(fields: [flowRoutineId], references: [id], onDelete: Cascade)
+  flowRoutine   FlowRoutine  @relation(fields: [flowRoutineId], references: [id], onDelete: Cascade)
   order         Int
   name          String
-  duration      String
-  stepType      String // Input / Process / Gate / Output / Core CTQ / Audit / Poka-Yoke / Wind-down
-  done          Boolean     @default(false)
+  durationMin   Int
+  kind          FlowStepKind
+  logs          FlowStepLog[]
+
+  @@index([flowRoutineId, order])
+}
+
+// One row per step per day it was completed. No row = not done that day,
+// so every routine resets itself at midnight without any cleanup job.
+model FlowStepLog {
+  id          String   @id @default(cuid())
+  flowStepId  String
+  flowStep    FlowStep @relation(fields: [flowStepId], references: [id], onDelete: Cascade)
+  date        DateTime @db.Date
+  completedAt DateTime @default(now())
+
+  @@unique([flowStepId, date])
 }
 
 model Habit {
   id       String      @id @default(cuid())
   userId   String
   user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name     String
-  target   String
-  archived Boolean     @default(false)
-  logs     HabitLog[]
+  name      String
+  target    String
+  archived  Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  logs      HabitLog[]
 }
 
 enum HabitStatus {
@@ -136,7 +163,12 @@ model FrictionTally {
   frictionTriggerId String
   frictionTrigger   FrictionTrigger @relation(fields: [frictionTriggerId], references: [id], onDelete: Cascade)
   loggedAt          DateTime        @default(now())
+  // The user's local calendar day when it was logged, so weekly/monthly counts
+  // line up with HabitLog dates regardless of time zone.
+  loggedOn          DateTime        @db.Date
   note              String?
+
+  @@index([frictionTriggerId, loggedOn])
 }
 
 // ==========================================

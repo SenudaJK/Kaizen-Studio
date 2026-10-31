@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { GoogleLogoIcon } from "@phosphor-icons/react/dist/csr/GoogleLogo";
+import { GoogleLogoIcon } from "@phosphor-icons/react/dist/ssr/GoogleLogo";
 import {
   AuthCard,
   AuthInput,
@@ -12,6 +12,7 @@ import {
   AuthSecondaryButton,
   AuthDivider,
 } from "@/components/auth-card";
+import { HOME_PATH } from "@/lib/routes";
 
 export default function LoginPage() {
   return (
@@ -24,7 +25,7 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = searchParams.get("callbackUrl") || HOME_PATH;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +51,6 @@ function LoginForm() {
     }
 
     router.push(callbackUrl);
-    router.refresh();
   }
 
   return (

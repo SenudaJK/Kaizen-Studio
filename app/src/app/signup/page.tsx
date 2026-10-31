@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { GoogleLogoIcon } from "@phosphor-icons/react/dist/csr/GoogleLogo";
+import { GoogleLogoIcon } from "@phosphor-icons/react/dist/ssr/GoogleLogo";
 import {
   AuthCard,
   AuthInput,
@@ -12,6 +12,7 @@ import {
   AuthSecondaryButton,
   AuthDivider,
 } from "@/components/auth-card";
+import { HOME_PATH } from "@/lib/routes";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -48,8 +49,7 @@ export default function SignupPage() {
       return;
     }
 
-    router.push("/");
-    router.refresh();
+    router.push(HOME_PATH);
   }
 
   return (
@@ -66,7 +66,7 @@ export default function SignupPage() {
         </>
       }
     >
-      <AuthSecondaryButton type="button" onClick={() => signIn("google", { callbackUrl: "/" })}>
+      <AuthSecondaryButton type="button" onClick={() => signIn("google", { callbackUrl: HOME_PATH })}>
         <GoogleLogoIcon size={16} weight="bold" />
         Continue with Google
       </AuthSecondaryButton>

@@ -66,11 +66,11 @@ verified (build passes, flows tested), not just coded.
   Google OAuth, all routes gated behind login via `proxy.ts`, every table scoped to `userId`.
 - [x] **Phase 2.5 — Design system.** Prototype's palette/fonts/icons wired into Tailwind v4
   (`globals.css`), shared auth UI primitives (`auth-card.tsx`), conventions documented above.
-- [ ] **Phase 3 — Workspace 1: Daily Check Sheet & Flow.** Morning/evening flow-chart routines,
+- [x] **Phase 3 — Workspace 1: Daily Check Sheet & Flow.** Morning/evening flow-chart routines,
   weekly habit check sheet (real dates, not a fixed array), friction/blocker tally counter —
   all reading/writing Postgres via Prisma, scoped to the signed-in user. This becomes the app's
   main authenticated shell/nav (the four-workspace layout from the prototype).
-- [ ] **Phase 4 — Workspace 2: Root-Cause Studio.** Pareto 80/20 chart computed live from
+- [x] **Phase 4 — Workspace 2: Root-Cause Studio.** Pareto 80/20 chart computed live from
   `FrictionTally` rows, interactive Fishbone diagram (per-problem causes across the 4 fixed
   categories, primary-cause selection, Poka-Yoke countermeasure).
 - [ ] **Phase 5 — Workspace 3: Stability & Correlations.** SPC/control charts with UCL/LCL/mean
@@ -137,9 +137,10 @@ rather than improvising.
   Sans, the default body font) for everything else, `font-mono` (JetBrains Mono) for labels,
   badges, KPI numbers, eyebrows, and anything data/stat-like. Loaded via `next/font/google` in
   `app/src/app/layout.tsx` — don't add a `<link>` tag for fonts.
-- **Icons**: `@phosphor-icons/react`, imported from the `dist/csr/<IconName>` subpath per icon
-  (e.g. `import { CheckSquareOffsetIcon } from "@phosphor-icons/react/dist/csr/CheckSquareOffset"`)
-  to avoid bundling the whole icon set. Exports are named `<IconName>Icon`.
+- **Icons**: `@phosphor-icons/react`, imported from the `dist/ssr/<IconName>` subpath per icon
+  (e.g. `import { CheckSquareOffsetIcon } from "@phosphor-icons/react/dist/ssr/CheckSquareOffset"`)
+  to avoid bundling the whole icon set. Use `ssr` everywhere: it works in server *and* client
+  components (`csr` uses React context and breaks in server components). Exports are named `<IconName>Icon`.
 - **Core component shapes**, matched to the prototype's HTML/Tailwind classes:
   - Cards: `bg-ivory rounded-2xl editorial-border shadow-editorial p-6` (use `shadow-floating`
     instead of `shadow-editorial` for modals/popovers).
@@ -168,3 +169,34 @@ rather than improvising.
   (`AuthCard`, `AuthInput`, `AuthPrimaryButton`, `AuthSecondaryButton`, `AuthDivider`) — reuse or
   extend this pattern (e.g. a `Card`, `Button` set) as the app grows, instead of re-deriving
   Tailwind classes inline on every page.
+
+## Architecture (feature-based; follow this for every workspace)
+
+```
+src/
+  app/(workspaces)/<route>/   page.tsx only gathers data + arranges sections; loading.tsx = skeleton
+  components/ui/              design-system primitives (Card, Button, Modal, Field, Stat, Toast...)
+  components/shell/           authenticated frame; nav is generated from shell/workspaces.ts
+  features/<workspace>/
+    domain/                   PURE functions (math, rules) + *.test.ts. No React, Prisma or Next imports.
+    queries.ts                server-only reads. Every query takes `userId` and filters by it.
+    actions.ts                "use server" writes: thin bodies wrapped in lib/run-action.ts
+    schemas.ts                zod validation for every action input
+    components/               UI for this workspace (client components only where interactive)
+  features/glossary/          plain-English layer: <Term k="sigma"> hints + the guide dialog
+  hooks/use-action.ts         run a server action in a transition, toast failures, optimistic updates
+  lib/                        session.ts (requireUserId), dates.ts (IsoDate "YYYY-MM-DD"), timezone.ts, run-action.ts
+```
+
+Rules that keep it clean:
+- **Business rules live in `domain/`** and are unit-tested (`npm test`). Components never do math.
+- **`runAction` is the only way a mutation runs**: authenticate, validate (zod), execute, revalidate.
+  `userId` always comes from the session, never from the client.
+- **Dates are `IsoDate` calendar days** in the user's time zone (cookie `kz_tz`, set by `TimezoneSync`),
+  never raw timestamps, so week/streak logic matches what the user sees.
+- **Cache Components is on**: anything reading the session/cookies/time must sit under `<Suspense>` (or
+  `loading.tsx`) and call `connection()` first (done inside `requireUserId`/`getUserTimeZone`).
+- **Plain English first**: UI labels are normal words ("Consistency", "Reliability"); the Six Sigma term
+  (Yield, Sigma level, CTQ...) appears as a `<Term>` hint and in the glossary. Add new terms to
+  `features/glossary/terms.ts`.
+- Sigma level = `z(yield) + 1.5` (standard convention), shown only after 5+ chances; 3σ ≈ 93%.
